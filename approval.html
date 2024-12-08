@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Approval Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1 {
+      font-size: 1.5em;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    textarea {
+      width: 100%;
+      max-width: 400px;
+      height: 100px;
+      margin-bottom: 10px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      font-size: 1em;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    // Parse the query parameters from the URL
+    const queryParams = new URLSearchParams(window.location.search);
+    const studentID = queryParams.get('StudentID') || 'Unknown';
+
+    // Hard-code the action since this is the approval page
+    const action = 'Approved';
+
+    // The endpoint URL you provided:
+    const APPROVAL_ENDPOINT = "https://prod-185.westus.logic.azure.com:443/workflows/b94e3df7c1624195a28b8a992c785b82/triggers/manual/paths/invoke?api-version=2016-06-01";
+
+    // After the DOM loads, we can set some text in the page
+    document.addEventListener('DOMContentLoaded', () => {
+      const title = document.getElementById('title');
+      title.textContent = `${action} request for Student ID: ${studentID}`;
+    });
+
+    // Function to handle the submit
+    function handleSubmit() {
+      const comments = document.getElementById('comments').value;
+
+      // Build the request payload
+      const payload = {
+        StudentID: studentID,
+        Action: action,
+        Comments: comments
+      };
+
+      // Send POST request to the Flow endpoint
+      fetch(APPROVAL_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(response => {
+        if (response.ok) {
+          return response.json().catch(() => ({})); 
+          // If response isn't JSON, return empty object to avoid errors
+        } else {
+          throw new Error('Network response was not ok');
+        }
+      })
+      .then(data => {
+        // Assuming the flow returns some JSON on success
+        alert('Your approval has been recorded successfully!');
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('There was an error submitting your approval. Please try again.');
+      });
+    }
+  </script>
+
+  <h1 id="title">Loading...</h1>
+  <p>You are about to approve this request. If you’d like to add any comments before finalizing, please do so below and click submit.</p>
+
+  <label for="comments">Additional Comments (optional):</label>
+  <textarea id="comments" placeholder="Enter any comments here"></textarea><br>
+
+  <button type="button" onclick="handleSubmit()">Submit Approval</button>
+</body>
+</html>
