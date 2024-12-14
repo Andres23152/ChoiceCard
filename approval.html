@@ -67,7 +67,7 @@
 
       // Send POST request to the Flow endpoint
       fetch(APPROVAL_ENDPOINT, {
-        method: 'POST',
+        method: 'GET',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       })
