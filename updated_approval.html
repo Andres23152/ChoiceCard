@@ -59,6 +59,10 @@
       font-size: 1em;
       cursor: pointer;
     }
+    button:disabled {
+      background-color: #999;
+      cursor: not-allowed;
+    }
     button:hover {
       background-color: #45a049;
     }
@@ -72,13 +76,13 @@
     .footer {
       text-align: center;
       margin-top: 20px;
-      font-size: 0.6em;
+      font-size: 0.9em;
       color: #666;
     }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="container" id="main-container">
     <div class="header">
       <h1 id="title">Schedule Approval For Loading...</h1>
       <img src="https://hshpnews.wordpress.com/wp-content/uploads/2015/11/logo-hshp.png?w=410&h=310" alt="HSHP Logo" class="logo">
@@ -105,13 +109,13 @@
     <textarea id="comments" placeholder="Enter any comments here"></textarea>
 
     <div class="button-container">
-      <button type="button" onclick="handleSubmit()">Submit Schedule Approval</button>
+      <button type="button" id="submit-button" onclick="handleSubmit()">Submit Schedule Approval</button>
     </div>
 
     <div class="footer">
       <p>Your feedback is confidential and securely processed by HSHP systems.</p>
-      <p>&copy; 2025 Harlingen School of Health Professions. All Rights Reserved.</p>
-      <p>For questions or concerns, please contact us at <a href="mailto:magdalena.lopez-perez@hcisd.org">support@hshp.org</a>.</p>
+      <p>&copy; 2024 Harlingen School of Health Professions. All Rights Reserved.</p>
+      <p>For questions or concerns, please contact us at <a href="mailto:support@hshp.edu">support@hshp.edu</a>.</p>
     </div>
   </div>
 
@@ -126,7 +130,7 @@
     const practicum = queryParams.get('Practicum') || 'Not Provided';
     const electives = queryParams.get('Electives') || 'Not Provided';
     const extracurricular = queryParams.get('OffCampusExtracurricular') || 'Not Provided';
-    const comments = queryParams.get('StudentComments') || 'Your Child Did not Leave any comments.';
+    const comments = queryParams.get('StudentComments') || 'Not Provided';
 
     // Update the page with dynamic information
     function fetchStudentInfo() {
@@ -149,6 +153,10 @@
 
     function handleSubmit() {
       const comments = document.getElementById('comments').value;
+      const submitButton = document.getElementById('submit-button');
+      submitButton.disabled = true; // Disable button
+      submitButton.textContent = 'Submitting...';
+
       const payload = { StudentID: studentID, Action: 'Approved', Comments: comments };
 
       fetch(APPROVAL_ENDPOINT, {
@@ -158,12 +166,20 @@
       })
       .then(response => {
         if (response.ok) {
-          alert('Approval submitted successfully!');
+          document.getElementById('main-container').innerHTML = `
+            <h1>Thank You!</h1>
+            <p>Your schedule approval has been successfully submitted.</p>
+            <p>If you have further questions, please contact us at <a href="mailto:support@hshp.edu">support@hshp.edu</a>.</p>
+          `;
         } else {
           throw new Error('Submission failed.');
         }
       })
-      .catch(() => alert('An error occurred. Please try again.'));
+      .catch(() => {
+        alert('An error occurred. Please try again.');
+        submitButton.disabled = false; // Re-enable button if failed
+        submitButton.textContent = 'Submit Schedule Approval';
+      });
     }
 
     // Load student info on page load
