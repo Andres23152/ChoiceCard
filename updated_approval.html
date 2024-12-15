@@ -141,6 +141,8 @@
     }
 
     // Submit approval data
+    const APPROVAL_ENDPOINT = "https://prod-185.westus.logic.azure.com:443/workflows/b94e3df7c1624195a28b8a992c785b82/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pp-xsHMX3VpiPEQMUqNaA7j8Ff5Glbo0eQ4qk7Dp_JE";
+
     function handleSubmit() {
       const comments = document.getElementById('comments').value;
       const payload = { StudentID: studentID, Action: 'Approved', Comments: comments };
