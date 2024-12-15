@@ -80,14 +80,13 @@
 <body>
   <div class="container">
     <div class="header">
+      <h1 id="title">Schedule Approval For Loading...</h1>
       <img src="https://hshpnews.wordpress.com/wp-content/uploads/2015/11/logo-hshp.png?w=410&h=310" alt="HSHP Logo" class="logo">
-      <h1 id="title">Approval Request</h1>
     </div>
 
     <p>Please review the following schedule and student details carefully. Your approval is required to confirm this information. If there are any concerns, feel free to add comments in the section below.</p>
 
     <div id="student-info" class="student-info">
-      <p><strong>Student Name:</strong> Loading...</p>
       <p><strong>Student ID:</strong> Loading...</p>
       <h3>Schedule:</h3>
       <ul>
@@ -95,6 +94,8 @@
         <li><strong>Social Studies:</strong> Loading...</li>
         <li><strong>Practicum:</strong> Loading...</li>
         <li><strong>Electives:</strong> Loading...</li>
+        <li><strong>Off-Campus Extracurricular:</strong> Loading...</li>
+        <li><strong>Student Comments:</strong> Loading...</li>
       </ul>
     </div>
 
@@ -110,7 +111,7 @@
     <div class="footer">
       <p>Your feedback is confidential and securely processed by HSHP systems.</p>
       <p>&copy; 2024 Harlingen School of Health Professions. All Rights Reserved.</p>
-      <p>For questions or concerns, please contact us at <a href="mailto:support@hshp.edu">support@hshp.edu</a>.</p>
+      <p>For questions or concerns, please contact us at <a href="mailto:magdalena.lopez-perez@hcisd.org">support@hshp.org</a>.</p>
     </div>
   </div>
 
@@ -124,12 +125,13 @@
     const socialStudies = queryParams.get('SocialStudies') || 'Not Provided';
     const practicum = queryParams.get('Practicum') || 'Not Provided';
     const electives = queryParams.get('Electives') || 'Not Provided';
+    const extracurricular = queryParams.get('OffCampusExtracurricular') || 'Not Provided';
+    const comments = queryParams.get('StudentComments') || 'Your Child Did not Leave any comments.';
 
     // Update the page with dynamic information
     function fetchStudentInfo() {
-      document.querySelector('#title').textContent = `Approval Request for ${firstName} ${lastName}`;
+      document.querySelector('#title').textContent = `Schedule Approval For ${firstName} ${lastName}`;
       document.querySelector('#student-info').innerHTML = `
-        <p><strong>Student Name:</strong> ${firstName} ${lastName}</p>
         <p><strong>Student ID:</strong> ${studentID}</p>
         <h3>Schedule:</h3>
         <ul>
@@ -137,6 +139,8 @@
           <li><strong>Social Studies:</strong> ${socialStudies}</li>
           <li><strong>Practicum:</strong> ${practicum}</li>
           <li><strong>Electives:</strong> ${electives}</li>
+          <li><strong>Off-Campus Extracurricular:</strong> ${extracurricular}</li>
+          <li><strong>Student Comments:</strong> ${comments}</li>
         </ul>`;
     }
 
