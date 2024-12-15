@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HSHP Approval Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      width: 80px;
+      height: auto;
+    }
+    h1 {
+      font-size: 1.8em;
+      color: #004080;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    textarea {
+      width: 100%;
+      height: 100px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 10px;
+      font-size: 1em;
+    }
+    .button-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .student-info {
+      margin-top: 15px;
+      padding: 10px;
+      background-color: #e6f7ff;
+      border: 1px solid #99d6ff;
+      border-radius: 4px;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.9em;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="https://hshpnews.wordpress.com/wp-content/uploads/2015/11/logo-hshp.png?w=410&h=310" alt="HSHP Logo" class="logo">
+      <h1 id="title">Approval Request</h1>
+    </div>
+
+    <p>Please review the following schedule and student details carefully. Your approval is required to confirm this information. If there are any concerns, feel free to add comments in the section below.</p>
+
+    <div id="student-info" class="student-info">
+      <p><strong>Student Name:</strong> Loading...</p>
+      <p><strong>Student ID:</strong> Loading...</p>
+      <h3>Schedule:</h3>
+      <ul>
+        <li><strong>English:</strong> Loading...</li>
+        <li><strong>Social Studies:</strong> Loading...</li>
+        <li><strong>Practicum:</strong> Loading...</li>
+        <li><strong>Electives:</strong> Loading...</li>
+      </ul>
+    </div>
+
+    <p>You are about to approve this request. If you’d like to add any comments before finalizing, please do so below and click submit.</p>
+
+    <label for="comments">Additional Comments (optional):</label>
+    <textarea id="comments" placeholder="Enter any comments here"></textarea>
+
+    <div class="button-container">
+      <button type="button" onclick="handleSubmit()">Submit Schedule Approval</button>
+    </div>
+
+    <div class="footer">
+      <p>Your feedback is confidential and securely processed by HSHP systems.</p>
+      <p>&copy; 2024 Harlingen School of Health Professions. All Rights Reserved.</p>
+      <p>For questions or concerns, please contact us at <a href="mailto:support@hshp.edu">support@hshp.edu</a>.</p>
+    </div>
+  </div>
+
+  <script>
+    // Parse URL parameters to fetch dynamic data
+    const queryParams = new URLSearchParams(window.location.search);
+    const studentID = queryParams.get('StudentID') || 'Unknown';
+    const firstName = queryParams.get('FirstName') || 'Not Provided';
+    const lastName = queryParams.get('LastName') || 'Not Provided';
+    const english = queryParams.get('English') || 'Not Provided';
+    const socialStudies = queryParams.get('SocialStudies') || 'Not Provided';
+    const practicum = queryParams.get('Practicum') || 'Not Provided';
+    const electives = queryParams.get('Electives') || 'Not Provided';
+
+    // Update the page with dynamic information
+    function fetchStudentInfo() {
+      document.querySelector('#title').textContent = `Approval Request for ${firstName} ${lastName}`;
+      document.querySelector('#student-info').innerHTML = `
+        <p><strong>Student Name:</strong> ${firstName} ${lastName}</p>
+        <p><strong>Student ID:</strong> ${studentID}</p>
+        <h3>Schedule:</h3>
+        <ul>
+          <li><strong>English:</strong> ${english}</li>
+          <li><strong>Social Studies:</strong> ${socialStudies}</li>
+          <li><strong>Practicum:</strong> ${practicum}</li>
+          <li><strong>Electives:</strong> ${electives}</li>
+        </ul>`;
+    }
+
+    // Submit approval data
+    function handleSubmit() {
+      const comments = document.getElementById('comments').value;
+      const payload = { StudentID: studentID, Action: 'Approved', Comments: comments };
+
+      fetch(APPROVAL_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(response => {
+        if (response.ok) {
+          alert('Approval submitted successfully!');
+        } else {
+          throw new Error('Submission failed.');
+        }
+      })
+      .catch(() => alert('An error occurred. Please try again.'));
+    }
+
+    // Load student info on page load
+    document.addEventListener('DOMContentLoaded', fetchStudentInfo);
+  </script>
+</body>
+</html>
