@@ -120,15 +120,43 @@
   </div>
 
   <script>
+    const GET_ENDPOINT = "https://prod-51.westus.logic.azure.com:443/workflows/972d756d204149d39f15c368394b6075/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=HYhiocLYasW9SGQpEJa_dxlShKYpViS_A_dhibE9c4Y";
     const REJECTION_ENDPOINT = "https://prod-113.westus.logic.azure.com:443/workflows/c44d6591680741439c0412250fc8edd3/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=GS6_KY-4ZGDk2EqpUbptxMHlwqUMH83UZjB7l6zq_hk";
 
     const queryParams = new URLSearchParams(window.location.search);
     const studentID = queryParams.get("StudentID") || "Unknown";
 
     async function fetchStudentInfo() {
-      // Simulate fetching student information dynamically (similar to approval)
-      document.querySelector("#title").textContent = `Schedule Rejection For ${studentID}`;
-      // Populate with mocked data or fetched data in actual implementation
+      try {
+        const response = await fetch(`${GET_ENDPOINT}&StudentID=${studentID}`);
+        const data = await response.json();
+
+        if (data) {
+          document.querySelector("#title").textContent = `Schedule Rejection For ${data.FirstName} ${data.LastName}`;
+          document.querySelector("#student-info").innerHTML = `
+            <p><strong>Student ID:</strong> ${studentID}</p>
+            <h3>Schedule:</h3>
+            <ul>
+              <li><strong>English:</strong> ${data.English}</li>
+              <li><strong>Social Studies:</strong> ${data.SocialStudies}</li>
+              <li><strong>Practicum:</strong> ${data.Practicum}</li>
+              <li><strong>Electives:</strong> ${data.Electives}</li>
+              <li><strong>Off-Campus Extracurricular:</strong> ${data.OffCampusExtracurricular}</li>
+              <li><strong>Student Comments:</strong> ${data.StudentComments}</li>
+            </ul>`;
+        } else {
+          document.getElementById("main-container").innerHTML = `
+            <h1>Error Loading Data</h1>
+            <p>We could not find data for the Student ID provided. Please contact support.</p>
+          `;
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        document.getElementById("main-container").innerHTML = `
+          <h1>Error Loading Data</h1>
+          <p>An error occurred while fetching the data. Please try again later.</p>
+        `;
+      }
     }
 
     function handleSubmit() {
