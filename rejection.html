@@ -3,95 +3,166 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rejection Page</title>
+  <title>HSHP Rejection Page</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
+      background-color: #ffe6e6; /* Light red background */
+      color: #333;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      width: 80px;
+      height: auto;
     }
     h1 {
-      font-size: 1.5em;
+      font-size: 1.8em;
+      color: #b71c1c; /* Dark red for emphasis */
     }
     label {
       display: block;
-      margin-top: 10px;
+      margin-top: 15px;
       font-weight: bold;
     }
     textarea {
       width: 100%;
-      max-width: 400px;
       height: 100px;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 10px;
+      font-size: 1em;
+    }
+    .button-container {
+      text-align: center;
+      margin-top: 20px;
     }
     button {
-      background-color: #f44336;
+      background-color: #f44336; /* Red button */
       color: white;
       padding: 10px 20px;
       border: none;
-      cursor: pointer;
+      border-radius: 4px;
       font-size: 1em;
+      cursor: pointer;
+    }
+    button:disabled {
+      background-color: #999;
+      cursor: not-allowed;
     }
     button:hover {
-      background-color: #e53935;
+      background-color: #e53935; /* Darker red on hover */
+    }
+    .student-info {
+      margin-top: 15px;
+      padding: 10px;
+      background-color: #ffebee;
+      border: 1px solid #ffccd5;
+      border-radius: 4px;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.9em;
+      color: #666;
     }
   </style>
 </head>
 <body>
+  <div class="container" id="main-container">
+    <div class="header">
+      <h1 id="title">Schedule Rejection For Loading...</h1>
+      <img src="https://hshpnews.wordpress.com/wp-content/uploads/2015/11/logo-hshp.png?w=410&h=310" alt="HSHP Logo" class="logo">
+    </div>
+
+    <p>Please review the following schedule and student details carefully. If you reject this schedule, you are required to provide comments explaining your decision in the section below.</p>
+
+    <div id="student-info" class="student-info">
+      <p><strong>Student ID:</strong> Loading...</p>
+      <h3>Schedule:</h3>
+      <ul>
+        <li><strong>English:</strong> Loading...</li>
+        <li><strong>Social Studies:</strong> Loading...</li>
+        <li><strong>Practicum:</strong> Loading...</li>
+        <li><strong>Electives:</strong> Loading...</li>
+        <li><strong>Off-Campus Extracurricular:</strong> Loading...</li>
+        <li><strong>Student Comments:</strong> Loading...</li>
+      </ul>
+    </div>
+
+    <p>You are about to reject this request. Please provide your reason for rejecting below and click submit.</p>
+
+    <label for="comments">Additional Comments (required):</label>
+    <textarea id="comments" placeholder="Enter your comments here"></textarea>
+
+    <div class="button-container">
+      <button type="button" id="submit-button" onclick="handleSubmit()">Submit Schedule Rejection</button>
+    </div>
+
+    <div class="footer">
+      <p>Your feedback is confidential and securely processed by HSHP systems.</p>
+      <p>&copy; 2024 Harlingen School of Health Professions. All Rights Reserved.</p>
+      <p>For questions or concerns, please contact us at <a href="mailto:support@hshp.edu">support@hshp.edu</a>.</p>
+    </div>
+  </div>
+
   <script>
-    // Parse the query parameters from the URL
-    const queryParams = new URLSearchParams(window.location.search);
-    const studentID = queryParams.get('StudentID') || 'Unknown';
-
-    // Hard-code the action since this is the rejection page
-    const action = 'Rejected';
-
-    // The endpoint URL for the rejection flow:
     const REJECTION_ENDPOINT = "https://prod-113.westus.logic.azure.com:443/workflows/c44d6591680741439c0412250fc8edd3/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=GS6_KY-4ZGDk2EqpUbptxMHlwqUMH83UZjB7l6zq_hk";
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const title = document.getElementById('title');
-      title.textContent = `${action} request for Student ID: ${studentID}`;
-    });
+    const queryParams = new URLSearchParams(window.location.search);
+    const studentID = queryParams.get("StudentID") || "Unknown";
+
+    async function fetchStudentInfo() {
+      // Simulate fetching student information dynamically (similar to approval)
+      document.querySelector("#title").textContent = `Schedule Rejection For ${studentID}`;
+      // Populate with mocked data or fetched data in actual implementation
+    }
 
     function handleSubmit() {
-      const comments = document.getElementById('comments').value;
+      const comments = document.getElementById("comments").value.trim();
 
-      // Build the request payload
-      const payload = {
-        StudentID: studentID,
-        Action: action,
-        Comments: comments
-      };
+      if (!comments) {
+        alert("Please provide comments explaining the reason for rejecting this schedule.");
+        return;
+      }
 
-      // Send POST request to the rejection Flow endpoint
+      const payload = { StudentID: studentID, Action: "Rejected", Comments: comments };
+
       fetch(REJECTION_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
       })
-      .then(response => {
-        if (response.ok) {
-          return response.json().catch(() => ({}));
-        } else {
-          throw new Error('Network response was not ok');
-        }
-      })
-      .then(data => {
-        alert('Your rejection has been recorded successfully!');
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('There was an error submitting your rejection. Please try again.');
-      });
+        .then((response) => {
+          if (response.ok) {
+            document.getElementById("main-container").innerHTML = `
+              <h1>Thank You!</h1>
+              <p>Your schedule rejection has been successfully submitted.</p>
+              <p>If you have further questions, please contact us at <a href="mailto:support@hshp.edu">support@hshp.edu</a>.</p>
+            `;
+          } else {
+            throw new Error("Submission failed.");
+          }
+        })
+        .catch(() => {
+          alert("An error occurred. Please try again.");
+        });
     }
+
+    document.addEventListener("DOMContentLoaded", fetchStudentInfo);
   </script>
-
-  <h1 id="title">Loading...</h1>
-  <p>You are about to reject this request. If you’d like to add any comments before finalizing, please do so below and click submit.</p>
-
-  <label for="comments">Additional Comments (optional):</label>
-  <textarea id="comments" placeholder="Enter any comments here"></textarea><br>
-
-  <button type="button" onclick="handleSubmit()">Submit Rejection</button>
 </body>
 </html>
