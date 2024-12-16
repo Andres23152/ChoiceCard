@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Approval Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      width: 80px;
+      height: auto;
+    }
+    h1 {
+      font-size: 1.8em;
+      color: #004080;
+    }
+    .button-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    button:disabled {
+      background-color: #999;
+      cursor: not-allowed;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .student-info {
+      margin-top: 15px;
+      padding: 10px;
+      background-color: #e6f7ff;
+      border: 1px solid #99d6ff;
+      border-radius: 4px;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.6em;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="main-container">
+    <div class="header">
+      <h1 id="title">Student Approval For Loading...</h1>
+      <img src="https://hshpnews.wordpress.com/wp-content/uploads/2015/11/logo-hshp.png?w=410&h=310" alt="HSHP Logo" class="logo">
+    </div>
+
+    <p>Please review the following schedule and details carefully. Your response is required to confirm this information. Approve your schedule to send it off to your parent/guardian!</p>
+
+    <div id="student-info" class="student-info">
+      <p><strong>Student ID:</strong> Loading...</p>
+      <h3>Schedule:</h3>
+      <ul>
+        <li><strong>English:</strong> Loading...</li>
+        <li><strong>Social Studies:</strong> Loading...</li>
+        <li><strong>Practicum:</strong> Loading...</li>
+        <li><strong>Electives:</strong> Loading...</li>
+        <li><strong>Off-Campus Extracurricular:</strong> Loading...</li>
+      </ul>
+    </div>
+
+    <div class="button-container">
+      <button type="button" id="submit-button" onclick="handleSubmit()">Submit Approval</button>
+    </div>
+
+    <div class="footer">
+      <p>Your feedback is confidential and securely processed by HSHP systems.</p>
+      <p>&copy; 2025 Harlingen School of Health Professions. All Rights Reserved.</p>
+      <p>For questions or concerns, please contact us at <a href="mailto:support@hshp.edu">support@hshp.edu</a>.</p>
+    </div>
+  </div>
+
+  <script>
+    const FLOW_ENDPOINT = "https://prod-08.westus.logic.azure.com:443/workflows/1dd67b73d7cd49ffa034e825f972544c/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=h2vwXJGXvsKUOIQMr5qWSYlD4_zaH_0c8otaHzIIa3A";
+
+    const queryParams = new URLSearchParams(window.location.search);
+    const studentID = queryParams.get("StudentID") || "Unknown";
+
+    async function fetchStudentInfo() {
+      try {
+        const response = await fetch(`${FLOW_ENDPOINT}&StudentID=${studentID}`);
+        const data = await response.json();
+
+        if (data) {
+          if (data.StudentResponse === "Approved") {
+            document.getElementById("main-container").innerHTML = `
+              <h1>Already Approved</h1>
+              <p>Your schedule has already been approved. No further action is required. If you meant to reject the schedule, make sure you submit another form response.</p>
+            `;
+            return;
+          }
+
+          document.querySelector("#title").textContent = `Student Approval For ${data.FirstName} ${data.LastName}`;
+          document.querySelector("#student-info").innerHTML = `
+            <p><strong>Student ID:</strong> ${studentID}</p>
+            <h3>Schedule:</h3>
+            <ul>
+              <li><strong>English:</strong> ${data.English}</li>
+              <li><strong>Social Studies:</strong> ${data.SocialStudies}</li>
+              <li><strong>Practicum:</strong> ${data.Practicum}</li>
+              <li><strong>Electives:</strong> ${data.Electives}</li>
+              <li><strong>Off-Campus Extracurricular:</strong> ${data.OffCampusExtracurricular}</li>
+            </ul>`;
+        } else {
+          document.getElementById("main-container").innerHTML = `
+            <h1>Error Loading Data</h1>
+            <p>We could not find data for the Student ID provided. Please contact support.</p>
+          `;
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        document.getElementById("main-container").innerHTML = `
+          <h1>Error Loading Data</h1>
+          <p>An error occurred while fetching the data. Please try again later.</p>
+        `;
+      }
+    }
+
+    const APPROVAL_ENDPOINT = "https://prod-08.westus.logic.azure.com:443/workflows/1dd67b73d7cd49ffa034e825f972544c/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=h2vwXJGXvsKUOIQMr5qWSYlD4_zaH_0c8otaHzIIa3A";
+
+    function handleSubmit() {
+      const submitButton = document.getElementById("submit-button");
+      submitButton.disabled = true;
+      submitButton.textContent = "Submitting...";
+
+      const payload = { StudentID: studentID, Action: "Approved" };
+
+      fetch(APPROVAL_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      })
+        .then(response => {
+          if (response.ok) {
+            document.getElementById("main-container").innerHTML = `
+              <h1>Thank You!</h1>
+              <p>Your approval has been successfully submitted.</p>
+              <p>If you have further questions, please contact us at <a href="mailto:support@hshp.edu">support@hshp.edu</a>.</p>
+            `;
+          } else {
+            throw new Error("Submission failed.");
+          }
+        })
+        .catch(() => {
+          alert("An error occurred. Please try again.");
+          submitButton.disabled = false;
+          submitButton.textContent = "Submit Approval";
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", fetchStudentInfo);
+  </script>
+</body>
+</html>
