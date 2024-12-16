@@ -100,7 +100,7 @@
   </div>
 
   <script>
-    const FLOW_ENDPOINT = "https://prod-08.westus.logic.azure.com:443/workflows/1dd67b73d7cd49ffa034e825f972544c/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=h2vwXJGXvsKUOIQMr5qWSYlD4_zaH_0c8otaHzIIa3A";
+    const FLOW_ENDPOINT = "https://prod-51.westus.logic.azure.com:443/workflows/972d756d204149d39f15c368394b6075/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=HYhiocLYasW9SGQpEJa_dxlShKYpViS_A_dhibE9c4Y";
 
     const queryParams = new URLSearchParams(window.location.search);
     const studentID = queryParams.get("StudentID") || "Unknown";
@@ -114,21 +114,21 @@
           if (data.StudentResponse === "Approved") {
             document.getElementById("main-container").innerHTML = `
               <h1>Already Approved</h1>
-              <p>Your schedule has already been approved. No further action is required. If you meant to reject the schedule, make sure you submit another form response.</p>
+              <p>Your schedule has already been approved. No further action is required.</p>
             `;
             return;
           }
 
-          document.querySelector("#title").textContent = `Student Approval For ${data.FirstName} ${data.LastName}`;
+          document.querySelector("#title").textContent = `Student Approval For ${data.FirstName || "Student"} ${data.LastName || ""}`;
           document.querySelector("#student-info").innerHTML = `
             <p><strong>Student ID:</strong> ${studentID}</p>
             <h3>Schedule:</h3>
             <ul>
-              <li><strong>English:</strong> ${data.English}</li>
-              <li><strong>Social Studies:</strong> ${data.SocialStudies}</li>
-              <li><strong>Practicum:</strong> ${data.Practicum}</li>
-              <li><strong>Electives:</strong> ${data.Electives}</li>
-              <li><strong>Off-Campus Extracurricular:</strong> ${data.OffCampusExtracurricular}</li>
+              <li><strong>English:</strong> ${data.English || "Not Provided"}</li>
+              <li><strong>Social Studies:</strong> ${data.SocialStudies || "Not Provided"}</li>
+              <li><strong>Practicum:</strong> ${data.Practicum || "Not Provided"}</li>
+              <li><strong>Electives:</strong> ${data.Electives || "Not Provided"}</li>
+              <li><strong>Off-Campus Extracurricular:</strong> ${data.OffCampusExtracurricular || "Not Provided"}</li>
             </ul>`;
         } else {
           document.getElementById("main-container").innerHTML = `
