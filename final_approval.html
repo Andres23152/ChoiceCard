@@ -124,7 +124,7 @@
 
     // Get the StudentID from the query parameter
     const queryParams = new URLSearchParams(window.location.search);
-    const studentID = queryParams.get('StudentID') || 'Unknown';
+    const studentID = queryParams.get("StudentID") || "Unknown";
 
     // Fetch student data dynamically
     async function fetchStudentInfo() {
@@ -133,9 +133,18 @@
         const data = await response.json();
 
         if (data) {
+          // Check if the Status is already "Approved"
+          if (data.Status === "Approved") {
+            document.getElementById("main-container").innerHTML = `
+              <h1>Already Approved</h1>
+              <p>This schedule has already been approved. No further action is required.</p>
+            `;
+            return; // Stop further execution
+          }
+
           // Update the page dynamically
-          document.querySelector('#title').textContent = `Schedule Approval For ${data.FirstName} ${data.LastName}`;
-          document.querySelector('#student-info').innerHTML = `
+          document.querySelector("#title").textContent = `Schedule Approval For ${data.FirstName} ${data.LastName}`;
+          document.querySelector("#student-info").innerHTML = `
             <p><strong>Student ID:</strong> ${studentID}</p>
             <h3>Schedule:</h3>
             <ul>
@@ -147,14 +156,14 @@
               <li><strong>Student Comments:</strong> ${data.StudentComments}</li>
             </ul>`;
         } else {
-          document.querySelector('#main-container').innerHTML = `
+          document.getElementById("main-container").innerHTML = `
             <h1>Error Loading Data</h1>
             <p>We could not find data for the Student ID provided. Please contact support.</p>
           `;
         }
       } catch (error) {
         console.error("Error fetching data:", error);
-        document.querySelector('#main-container').innerHTML = `
+        document.getElementById("main-container").innerHTML = `
           <h1>Error Loading Data</h1>
           <p>An error occurred while fetching the data. Please try again later.</p>
         `;
@@ -165,37 +174,37 @@
     const APPROVAL_ENDPOINT = "https://prod-185.westus.logic.azure.com:443/workflows/b94e3df7c1624195a28b8a992c785b82/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pp-xsHMX3VpiPEQMUqNaA7j8Ff5Glbo0eQ4qk7Dp_JE";
 
     function handleSubmit() {
-      const comments = document.getElementById('comments').value;
-      const submitButton = document.getElementById('submit-button');
+      const comments = document.getElementById("comments").value;
+      const submitButton = document.getElementById("submit-button");
       submitButton.disabled = true; // Disable button
-      submitButton.textContent = 'Submitting...';
+      submitButton.textContent = "Submitting...";
 
-      const payload = { StudentID: studentID, Action: 'Approved', Comments: comments };
+      const payload = { StudentID: studentID, Action: "Approved", Comments: comments };
 
       fetch(APPROVAL_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
       })
-      .then(response => {
-        if (response.ok) {
-          document.getElementById('main-container').innerHTML = `
-            <h1>Thank You!</h1>
-            <p>Your schedule approval has been successfully submitted.</p>
-            <p>If you have further questions, please contact us at <a href="mailto:support@hshp.edu">support@hshp.edu</a>.</p>
-          `;
-        } else {
-          throw new Error('Submission failed.');
-        }
-      })
-      .catch(() => {
-        alert('An error occurred. Please try again.');
-        submitButton.disabled = false; // Re-enable button if failed
-        submitButton.textContent = 'Submit Schedule Approval';
-      });
+        .then(response => {
+          if (response.ok) {
+            document.getElementById("main-container").innerHTML = `
+              <h1>Thank You!</h1>
+              <p>Your schedule approval has been successfully submitted.</p>
+              <p>If you have further questions, please contact us at <a href="mailto:support@hshp.edu">support@hshp.edu</a>.</p>
+            `;
+          } else {
+            throw new Error("Submission failed.");
+          }
+        })
+        .catch(() => {
+          alert("An error occurred. Please try again.");
+          submitButton.disabled = false; // Re-enable button if failed
+          submitButton.textContent = "Submit Schedule Approval";
+        });
     }
 
-    document.addEventListener('DOMContentLoaded', fetchStudentInfo);
+    document.addEventListener("DOMContentLoaded", fetchStudentInfo);
   </script>
 </body>
 </html>
