@@ -88,7 +88,7 @@
       <img src="https://hshpnews.wordpress.com/wp-content/uploads/2015/11/logo-hshp.png?w=410&h=310" alt="HSHP Logo" class="logo">
     </div>
 
-    <p>Please review the following schedule and student details carefully. If you reject this schedule, you are required to provide comments explaining your decision in the section below.</p>
+    <p id="instructions">Please review the following schedule and student details carefully. If you reject this schedule, you are required to provide comments explaining your decision in the section below.</p>
 
     <div id="student-info" class="student-info">
       <p><strong>Student ID:</strong> Loading...</p>
@@ -103,13 +103,13 @@
       </ul>
     </div>
 
-    <p>You are about to reject this request. Please provide your reason for rejecting below and click submit.</p>
+    <div id="response-container">
+      <label for="comments">Additional Comments (required):</label>
+      <textarea id="comments" placeholder="Enter your comments here"></textarea>
 
-    <label for="comments">Additional Comments (required):</label>
-    <textarea id="comments" placeholder="Enter your comments here"></textarea>
-
-    <div class="button-container">
-      <button type="button" id="submit-button" onclick="handleSubmit()">Submit Schedule Rejection</button>
+      <div class="button-container">
+        <button type="button" id="submit-button" onclick="handleSubmit()">Submit Schedule Rejection</button>
+      </div>
     </div>
 
     <div class="footer">
@@ -144,18 +144,26 @@
               <li><strong>Off-Campus Extracurricular:</strong> ${data.OffCampusExtracurricular}</li>
               <li><strong>Student Comments:</strong> ${data.StudentComments}</li>
             </ul>`;
+
+          if (data.ParentResponse === "Approved") {
+            document.querySelector("#main-container").innerHTML = `
+              <h1>Schedule Already Approved</h1>
+              <p>The schedule for ${data.FirstName} ${data.LastName} has already been approved. No further action is required.</p>`;
+          } else if (data.ParentResponse === "Rejected") {
+            document.querySelector("#main-container").innerHTML = `
+              <h1>Schedule Already Rejected</h1>
+              <p>The schedule for ${data.FirstName} ${data.LastName} has already been rejected. No further action is required.</p>`;
+          }
         } else {
           document.getElementById("main-container").innerHTML = `
             <h1>Error Loading Data</h1>
-            <p>We could not find data for the Student ID provided. Please contact support.</p>
-          `;
+            <p>We could not find data for the Student ID provided. Please contact support.</p>`;
         }
       } catch (error) {
         console.error("Error fetching data:", error);
         document.getElementById("main-container").innerHTML = `
           <h1>Error Loading Data</h1>
-          <p>An error occurred while fetching the data. Please try again later.</p>
-        `;
+          <p>An error occurred while fetching the data. Please try again later.</p>`;
       }
     }
 
@@ -179,8 +187,7 @@
             document.getElementById("main-container").innerHTML = `
               <h1>Thank You!</h1>
               <p>Your schedule rejection has been successfully submitted.</p>
-              <p>If you have further questions, please contact us at <a href="mailto:support@hshp.edu">support@hshp.edu</a>.</p>
-            `;
+              <p>If you have further questions, please contact us at <a href="mailto:support@hshp.edu">support@hshp.edu</a>.</p>`;
           } else {
             throw new Error("Submission failed.");
           }
