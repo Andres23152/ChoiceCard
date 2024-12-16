@@ -145,11 +145,11 @@
               <li><strong>Student Comments:</strong> ${data.StudentComments}</li>
             </ul>`;
 
-          if (data.ParentResponse === "Approved") {
+          if (data.Status === "Approved") {
             document.querySelector("#main-container").innerHTML = `
               <h1>Schedule Already Approved</h1>
               <p>The schedule for ${data.FirstName} ${data.LastName} has already been approved. No further action is required.</p>`;
-          } else if (data.ParentResponse === "Rejected") {
+          } else if (data.Status === "Rejected") {
             document.querySelector("#main-container").innerHTML = `
               <h1>Schedule Already Rejected</h1>
               <p>The schedule for ${data.FirstName} ${data.LastName} has already been rejected. No further action is required.</p>`;
