@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Approval Page</title>
+  <title>Student Review Page</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -70,15 +70,15 @@
 <body>
   <div class="container" id="main-container">
     <div class="header">
-      <h1 id="title">Student Approval For Loading...</h1>
+      <h1 id="title">Student Review for Loading...</h1>
       <img src="https://hshpnews.wordpress.com/wp-content/uploads/2015/11/logo-hshp.png?w=410&h=310" alt="HSHP Logo" class="logo">
     </div>
 
-    <p>Please review the following schedule and details carefully. Your response is required to confirm this information. Approve your schedule to send it off to your parent/guardian!</p>
+    <p>Please review the following course requests and details carefully. Your response is required to confirm this information. Submit your course requests to proceed with parental review!</p>
 
     <div id="student-info" class="student-info">
       <p><strong>Student ID:</strong> Loading...</p>
-      <h3>Schedule:</h3>
+      <h3>Course Requests:</h3>
       <ul>
         <li><strong>English:</strong> Loading...</li>
         <li><strong>Social Studies:</strong> Loading...</li>
@@ -89,12 +89,12 @@
     </div>
 
     <div class="button-container">
-      <button type="button" id="submit-button" onclick="handleSubmit()">Submit Approval</button>
+      <button type="button" id="submit-button" onclick="handleSubmit()">Submit Requests</button>
     </div>
 
     <div class="footer">
       <p>Your feedback is confidential and securely processed by HSHP systems.</p>
-      <p>&copy; 2025 Harlingen School of Health Professions. All Rights Reserved.</p>
+      <p>&copy; 2025 Harlingen School of Health Professions. For internal use only.</p>
       <p>For questions or concerns, please contact us at <a href="mailto:support@hshp.edu">support@hshp.edu</a>.</p>
     </div>
   </div>
@@ -111,18 +111,18 @@
         const data = await response.json();
 
         if (data) {
-          if (data.StudentResponse === "Approved") {
+          if (data.StudentResponse === "Confirmed") {
             document.getElementById("main-container").innerHTML = `
-              <h1>Already Approved</h1>
-              <p>Your schedule has already been approved. No further action is required.</p>
+              <h1>Already Confirmed</h1>
+              <p>Your course requests have already been confirmed. No further action is required.</p>
             `;
             return;
           }
 
-          document.querySelector("#title").textContent = `Student Approval For ${data.FirstName || "Student"} ${data.LastName || ""}`;
+          document.querySelector("#title").textContent = `Student Review for ${data.FirstName || "Student"} ${data.LastName || ""}`;
           document.querySelector("#student-info").innerHTML = `
             <p><strong>Student ID:</strong> ${studentID}</p>
-            <h3>Schedule:</h3>
+            <h3>Course Requests:</h3>
             <ul>
               <li><strong>English:</strong> ${data.English || "Not Provided"}</li>
               <li><strong>Social Studies:</strong> ${data.SocialStudies || "Not Provided"}</li>
@@ -152,7 +152,7 @@
       submitButton.disabled = true;
       submitButton.textContent = "Submitting...";
 
-      const payload = { StudentID: studentID, Action: "Approved" };
+      const payload = { StudentID: studentID, Action: "Confirmed" };
 
       fetch(APPROVAL_ENDPOINT, {
         method: "POST",
@@ -163,7 +163,7 @@
           if (response.ok) {
             document.getElementById("main-container").innerHTML = `
               <h1>Thank You!</h1>
-              <p>Your approval has been successfully submitted.</p>
+              <p>Your course requests have been successfully submitted.</p>
               <p>If you have further questions, please contact us at <a href="mailto:support@hshp.edu">support@hshp.edu</a>.</p>
             `;
           } else {
@@ -173,7 +173,7 @@
         .catch(() => {
           alert("An error occurred. Please try again.");
           submitButton.disabled = false;
-          submitButton.textContent = "Submit Approval";
+          submitButton.textContent = "Submit Requests";
         });
     }
 
