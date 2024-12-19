@@ -65,6 +65,38 @@
       font-size: 0.6em;
       color: #666;
     }
+    .alert {
+      background-color: #e6f0fa;
+      border: 1px solid #9ec2f3;
+      color: #333;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 20px 0;
+    }
+    .alert p {
+      margin: 0 0 10px;
+    }
+    .alert strong {
+      color: #00509e;
+    }
+    .thank-you {
+      background-color: #f0fff0;
+      border: 1px solid #b2d8b2;
+      color: #2e8b57;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+      text-align: center;
+    }
+    .thank-you h1 {
+      margin-bottom: 10px;
+      font-size: 1.6em;
+      color: #2e8b57;
+    }
+    .thank-you a {
+      color: #2e8b57;
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -74,7 +106,7 @@
       <img src="https://hshpnews.wordpress.com/wp-content/uploads/2015/11/logo-hshp.png?w=410&h=310" alt="HSHP Logo" class="logo">
     </div>
 
-    <p>Please review the following course requests and details carefully. Your response is required to confirm this information. Submit your course requests to proceed with parental review!</p>
+    <p>Please review the following course requests and details carefully. Your response is required to confirm or request changes to this information. Submit your course requests to proceed with parental review!</p>
 
     <div id="student-info" class="student-info">
       <p><strong>Student ID:</strong> Loading...</p>
@@ -113,10 +145,11 @@
         if (data) {
           if (data.StudentResponse === "Confirmed") {
             document.getElementById("main-container").innerHTML = `
-              <h1>Already Confirmed</h1>
-              <p>Your course requests have already been confirmed. No further action is required.</p>
-              <p>Please let your parent/guardian know and have them check their emails.</p>
-              <p>Please note: These course requests are subject to change due to course availability and other scheduling factors.</p>
+              <div class="thank-you">
+                <h1>Thank You!</h1>
+                <p>Your course requests have been successfully submitted.</p>
+                <p>If you have further questions, please contact us at <a href="mailto:support@hshp.edu">support@hshp.edu</a>.</p>
+              </div>
             `;
             return;
           }
@@ -164,9 +197,11 @@
         .then(response => {
           if (response.ok) {
             document.getElementById("main-container").innerHTML = `
-              <h1>Thank You!</h1>
-              <p>Your course requests have been successfully submitted.</p>
-              <p>If you have further questions, please contact us at <a href="mailto:support@hshp.edu">support@hshp.edu</a>.</p>
+              <div class="thank-you">
+                <h1>Thank You!</h1>
+                <p>Your course requests have been successfully submitted.</p>
+                <p>If you have further questions, please contact us at <a href="mailto:support@hshp.edu">support@hshp.edu</a>.</p>
+              </div>
             `;
           } else {
             throw new Error("Submission failed.");
