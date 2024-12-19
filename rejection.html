@@ -150,7 +150,7 @@
         const data = await response.json();
 
         if (data) {
-          document.querySelector("#title").textContent = `Option Review for ${data.FirstName} ${data.LastName}`;
+          document.querySelector("#title").textContent = `Parent/Guardian Course Request Rejections for ${data.FirstName} ${data.LastName}`;
           document.querySelector("#student-info").innerHTML = `
             <p><strong>Student ID:</strong> ${studentID}</p>
             <h3>Selected Options:</h3>
