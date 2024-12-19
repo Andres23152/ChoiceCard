@@ -121,8 +121,8 @@
     </div>
 
     <div id="response-container">
-      <label for="phone">Please enter the best phone number to reach you at (required):</label>
-      <input type="tel" id="phone" placeholder="Enter a valid phone number" required pattern="\d{10}" title="Please enter a valid 10-digit phone number">
+      <label for="phone">Parent Contact Number (required):</label>
+      <input type="tel" id="phone" placeholder="(XXX) XXX - XXXX" required maxlength="14">
 
       <label for="comments">Comments (required):</label>
       <textarea id="comments" placeholder="Enter your comments here"></textarea>
@@ -186,11 +186,18 @@
       }
     }
 
+    document.getElementById("phone").addEventListener("input", function(e) {
+      let input = e.target.value.replace(/\D/g, "");
+      if (input.length > 10) input = input.slice(0, 10);
+      const formatted = input.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2 - $3");
+      e.target.value = formatted;
+    });
+
     function handleSubmit() {
       const phone = document.getElementById("phone").value.trim();
       const comments = document.getElementById("comments").value.trim();
 
-      if (!phone || !/\d{10}/.test(phone)) {
+      if (!phone || phone.length !== 14) {
         alert("Please enter a valid 10-digit phone number.");
         return;
       }
