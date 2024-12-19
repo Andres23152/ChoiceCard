@@ -79,43 +79,61 @@
       font-size: 0.9em;
       color: #666;
     }
+    .thank-you {
+      background-color: #fff3f3;
+      border: 1px solid #f5b5b5;
+      color: #d32f2f;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+      text-align: center;
+    }
+    .thank-you h1 {
+      margin-bottom: 10px;
+      font-size: 1.6em;
+      color: #b71c1c;
+    }
+    .thank-you a {
+      color: #b71c1c;
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
   <div class="container" id="main-container">
     <div class="header">
-      <h1 id="title">Schedule Rejection For Loading...</h1>
+      <h1 id="title">Option Review for Loading...</h1>
       <img src="https://hshpnews.wordpress.com/wp-content/uploads/2015/11/logo-hshp.png?w=410&h=310" alt="HSHP Logo" class="logo">
     </div>
 
-    <p id="instructions">Please review the following schedule and student details carefully. If you reject this schedule, you are required to provide comments explaining your decision in the section below.</p>
+    <p id="instructions">Please review the following options and student details carefully. If you decide to request changes, provide your reasons in the comments section below.</p>
 
     <div id="student-info" class="student-info">
       <p><strong>Student ID:</strong> Loading...</p>
-      <h3>Schedule:</h3>
+      <h3>Selected Options:</h3>
       <ul>
         <li><strong>English:</strong> Loading...</li>
         <li><strong>Social Studies:</strong> Loading...</li>
         <li><strong>Practicum:</strong> Loading...</li>
         <li><strong>Electives:</strong> Loading...</li>
-        <li><strong>Off-Campus Extracurricular:</strong> Loading...</li>
+        <li><strong>Off-Campus Activities:</strong> Loading...</li>
         <li><strong>Student Comments:</strong> Loading...</li>
       </ul>
     </div>
 
     <div id="response-container">
-      <label for="comments">Additional Comments (required):</label>
+      <label for="comments">Comments (required):</label>
       <textarea id="comments" placeholder="Enter your comments here"></textarea>
 
       <div class="button-container">
-        <button type="button" id="submit-button" onclick="handleSubmit()">Submit Schedule Rejection</button>
+        <button type="button" id="submit-button" onclick="handleSubmit()">Submit Request for Changes</button>
       </div>
     </div>
 
     <div class="footer">
       <p>Your feedback is confidential and securely processed by HSHP systems.</p>
       <p>&copy; 2024 Harlingen School of Health Professions. All Rights Reserved.</p>
-      <p>For questions or concerns, please contact us at <a href="mailto:support@hshp.edu">support@hshp.edu</a>.</p>
+      <p>For questions or concerns, please contact us.</p>
     </div>
   </div>
 
@@ -132,27 +150,26 @@
         const data = await response.json();
 
         if (data) {
-          document.querySelector("#title").textContent = `Schedule Rejection For ${data.FirstName} ${data.LastName}`;
+          document.querySelector("#title").textContent = `Option Review for ${data.FirstName} ${data.LastName}`;
           document.querySelector("#student-info").innerHTML = `
             <p><strong>Student ID:</strong> ${studentID}</p>
-            <h3>Schedule:</h3>
+            <h3>Selected Options:</h3>
             <ul>
               <li><strong>English:</strong> ${data.English}</li>
               <li><strong>Social Studies:</strong> ${data.SocialStudies}</li>
               <li><strong>Practicum:</strong> ${data.Practicum}</li>
               <li><strong>Electives:</strong> ${data.Electives}</li>
-              <li><strong>Off-Campus Extracurricular:</strong> ${data.OffCampusExtracurricular}</li>
+              <li><strong>Off-Campus Activities:</strong> ${data.OffCampusExtracurricular}</li>
               <li><strong>Student Comments:</strong> ${data.StudentComments}</li>
             </ul>`;
 
-          if (data.Status === "Approved") {
+          if (data.Status === "Rejected") {
             document.querySelector("#main-container").innerHTML = `
-              <h1>Schedule Already Approved</h1>
-              <p>The schedule for ${data.FirstName} ${data.LastName} has already been approved. No further action is required.</p>`;
-          } else if (data.Status === "Rejected") {
-            document.querySelector("#main-container").innerHTML = `
-              <h1>Schedule Already Rejected</h1>
-              <p>The schedule for ${data.FirstName} ${data.LastName} has already been rejected. No further action is required.</p>`;
+              <div class="thank-you">
+                <h1>Changes Already Requested</h1>
+                <p>The selected options for ${data.FirstName} ${data.LastName} have already been flagged for changes. No further action is needed.</p>
+                <p>If you have any questions, please contact us.</p>
+              </div>`;
           }
         } else {
           document.getElementById("main-container").innerHTML = `
@@ -171,7 +188,7 @@
       const comments = document.getElementById("comments").value.trim();
 
       if (!comments) {
-        alert("Please provide comments explaining the reason for rejecting this schedule.");
+        alert("Please make sure provide comments explaining the reason for requesting changes.");
         return;
       }
 
@@ -185,9 +202,11 @@
         .then((response) => {
           if (response.ok) {
             document.getElementById("main-container").innerHTML = `
-              <h1>Thank You!</h1>
-              <p>Your schedule rejection has been successfully submitted.</p>
-              <p>If you have further questions, please contact us at <a href="mailto:support@hshp.edu">support@hshp.edu</a>.</p>`;
+              <div class="thank-you">
+                <h1>Thank You!</h1>
+                <p>Your request for changes has been successfully submitted.</p>
+                <p>If you have further questions, please contact us at <a href="mailto:support@hshp.edu">support@hshp.edu</a>.</p>
+              </div>`;
           } else {
             throw new Error("Submission failed.");
           }
