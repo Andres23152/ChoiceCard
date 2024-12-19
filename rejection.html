@@ -186,15 +186,22 @@
       }
     }
 
-    document.getElementById("phone").addEventListener("input", function(e) {
-      let input = e.target.value.replace(/\D/g, "");
-      if (input.length > 10) input = input.slice(0, 10);
-      const formatted = "(XXX) XXX - XXXX".split("").map((char, i) => {
-        if (char === "X" && input[i]) return input[i];
-        return char;
-      }).join("");
-      e.target.value = formatted;
-    });
+document.getElementById("phone").addEventListener("input", function(e) {
+  let input = e.target.value.replace(/\D/g, ""); // Remove all non-digit characters
+  let formatted = "";
+
+  if (input.length > 0) {
+    formatted += "(" + input.substring(0, 3);
+  }
+  if (input.length >= 4) {
+    formatted += ") " + input.substring(3, 6);
+  }
+  if (input.length >= 7) {
+    formatted += "-" + input.substring(6, 10);
+  }
+  
+  e.target.value = formatted; // Update the value with the formatted string
+});
 
     function handleSubmit() {
       const phone = document.getElementById("phone").value.trim();
