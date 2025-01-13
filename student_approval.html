@@ -136,10 +136,12 @@
 
     const queryParams = new URLSearchParams(window.location.search);
     const studentID = queryParams.get("StudentID") || "Unknown";
+    const firstName = queryParams.get("FirstName") || "";
+    const lastName = queryParams.get("LastName") || "";
 
     async function fetchStudentInfo() {
       try {
-        const response = await fetch(`${FLOW_ENDPOINT}&StudentID=${studentID}`);
+        const response = await fetch(`${FLOW_ENDPOINT}&StudentID=${studentID}&FirstName=${firstName}&LastName=${lastName}`);
         const data = await response.json();
 
         if (data) {
@@ -159,12 +161,15 @@
             <p><strong>Student ID:</strong> ${studentID}</p>
             <h3>Course Requests:</h3>
             <ul>
-              <li><strong>English:</strong> ${data.English || "Not Provided"}</li>
-              <li><strong>Social Studies:</strong> ${data.SocialStudies || "Not Provided"}</li>
-              <li><strong>Practicum:</strong> ${data.Practicum || "Not Provided"}</li>
+              <li><strong>Reading PAP:</strong> All students will be enrolled in Reading PAP</li>
+              <li><strong>Mathematics:</strong> ${data.Mathematics || "Not Provided"}</li>
+              <li><strong>Science:</strong> ${data.Science || "Not Provided"}</li>
+              <li><strong>Social Studies PAP:</strong> All students will be enrolled in Social Studies PAP</li>
+              <li><strong>Foreign Language:</strong> ${data.ForeignLanguage || "Not Provided"}</li>
+              <li><strong>Health Science:</strong> ${data.HealthScience || "Not Provided"}</li>
               <li><strong>Electives:</strong> ${data.Electives || "Not Provided"}</li>
-              <li><strong>Off-Campus Extracurricular:</strong> ${data.OffCampusExtracurricular || "Not Provided"}</li>
-            </ul>`;
+            </ul>
+            <p class="note">Please Note: These course requests are subject to change due to course availability and other scheduling factors.</p>`;
         } else {
           document.getElementById("main-container").innerHTML = `
             <h1>Error Loading Data</h1>
