@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Student Course Request Confirmation (12th Grade)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border: 1px solid #005662;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 4px solid #005662;
+      padding-bottom: 15px;
+    }
+    .logo {
+      width: 80px;
+      height: auto;
+    }
+    h1 {
+      font-size: 1.8em;
+      color: #005662;
+      margin: 0;
+      font-weight: bold;
+    }
+    .button-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    button:disabled {
+      background-color: #999;
+      cursor: not-allowed;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .student-info {
+      margin-top: 15px;
+      padding: 10px;
+      background-color: #e6f7ff;
+      border: 1px solid #99d6ff;
+      border-radius: 4px;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.8em;
+      color: #666;
+      border-top: 2px solid #005662;
+      padding-top: 10px;
+    }
+    .thank-you {
+      background-color: #f0fff0;
+      border: 1px solid #b2d8b2;
+      color: #2e8b57;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+      text-align: center;
+    }
+    .thank-you h1 {
+      margin-bottom: 10px;
+      font-size: 1.6em;
+      color: #2e8b57;
+    }
+    .thank-you a {
+      color: #2e8b57;
+      text-decoration: underline;
+    }
+    .note {
+      font-size: 15px;
+      color: #ff0000;
+      margin-top: 20px;
+      font-style: italic;
+      text-align: center;
+      font-weight: bold;
+    }
+    ul li {
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="main-container">
+    <!-- HEADER -->
+    <div class="header">
+      <h1 id="title">Student Course Request Confirmation for Loading...</h1>
+      <img
+        src="https://hshpnews.wordpress.com/wp-content/uploads/2015/11/logo-hshp.png?w=410&h=310"
+        alt="HSHP Logo"
+        class="logo"
+      />
+    </div>
+
+    <!-- INTRO TEXT -->
+    <p>
+      Please review the following course requests and details carefully.
+      Your response is required to confirm this information.
+      Confirm your course requests to proceed with parental review!
+    </p>
+
+    <!-- STUDENT INFO PLACEHOLDER -->
+    <div id="student-info" class="student-info">
+      <p><strong>Student ID:</strong> Loading...</p>
+      <h3>Course Requests:</h3>
+      <ul>
+        <li><strong>English:</strong> Loading...</li>
+        <li><strong>Social Studies:</strong> Loading...</li>
+        <li><strong>Practicum:</strong> Loading...</li>
+        <li><strong>Electives:</strong> Loading...</li>
+      </ul>
+
+      <!-- DYNAMIC EXTRACURRICULAR SECTION -->
+      <h3>Off-Campus Extracurricular:</h3>
+      <ul>
+        <li><strong>Participating?</strong> Loading...</li>
+        <li><strong>Activity Name:</strong> Loading...</li>
+        <li><strong>Coach's Permission:</strong> Loading...</li>
+        <li><strong>Zone/Home Campus:</strong> Loading...</li>
+      </ul>
+
+      <p class="note">
+        Please Note: These course requests are subject to change due to course
+        availability and other scheduling factors.
+      </p>
+    </div>
+
+    <!-- CONFIRM BUTTON -->
+    <div class="button-container">
+      <button type="button" id="submit-button" onclick="handleSubmit()">
+        Confirm Requests
+      </button>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <p>
+        &copy; 2025 Harlingen School of Health Professions. For internal use only.
+      </p>
+      <p>
+        For questions or concerns, please contact Mrs. Perez at
+        <a href="mailto:magdalena.lopez-perez@hcisd.org">magdalena.lopez-perez@hcisd.org</a>.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    /*
+     * FLOW_ENDPOINT for retrieving 12th-grade data.
+     * APPROVAL_ENDPOINT for confirming the request.
+     * Make sure to update them to your actual Logic App URLs.
+     */
+    const FLOW_ENDPOINT =
+      "https://prod-51.westus.logic.azure.com:443/workflows/972d756d204149d39f15c368394b6075/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=HYhiocLYasW9SGQpEJa_dxlShKYpViS_A_dhibE9c4Y";
+
+    const APPROVAL_ENDPOINT =
+      "https://prod-08.westus.logic.azure.com:443/workflows/1dd67b73d7cd49ffa034e825f972544c/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=h2vwXJGXvsKUOIQMr5qWSYlD4_zaH_0c8otaHzIIa3A";
+
+    // Parse query params
+    const queryParams = new URLSearchParams(window.location.search);
+    const studentID = queryParams.get("StudentID") || "Unknown";
+    const firstName = queryParams.get("FirstName") || "";
+    const lastName = queryParams.get("LastName") || "";
+
+    // Fetch the 12th-grade student data
+    async function fetchStudentInfo() {
+      try {
+        const response = await fetch(
+          `${FLOW_ENDPOINT}&StudentID=${studentID}&FirstName=${firstName}&LastName=${lastName}`
+        );
+        const data = await response.json();
+
+        if (data) {
+          // Check if they've already confirmed
+          if (data.StudentResponse === "Confirmed") {
+            document.getElementById("main-container").innerHTML = `
+              <div class="thank-you">
+                <h1>Thank You!</h1>
+                <p>Your course requests have already been successfully submitted.</p>
+                <p>If you have further questions, please contact Mrs. Perez at 
+                  <a href="mailto:magdalena.lopez-perez@hcisd.org">magdalena.lopez-perez@hcisd.org</a>.
+                </p>
+              </div>
+            `;
+            return;
+          }
+
+          // Update Title
+          document.querySelector("#title").textContent = 
+            `Student Course Request Confirmation for ${data.FirstName || "Student"} ${data.LastName || ""}`;
+
+          // Populate 12th Grade course fields
+          document.querySelector("#student-info").innerHTML = `
+            <p><strong>Student ID:</strong> ${studentID}</p>
+            <h3>Course Requests:</h3>
+            <ul>
+              <li><strong>English:</strong> ${data.English || "Not Provided"}</li>
+              <li><strong>Social Studies:</strong> ${data.SocialStudies || "Not Provided"}</li>
+              <li><strong>Practicum:</strong> ${data.Practicum || "Not Provided"}</li>
+              <li><strong>Electives:</strong> ${data.Electives || "Not Provided"}</li>
+            </ul>
+            <h3>Off-Campus Extracurricular:</h3>
+            <ul>
+              <li><strong>Participating?</strong> ${data.Participating || "Not Provided"}</li>
+              <li><strong>Activity Name:</strong> ${data.ActivityName || "Not Provided"}</li>
+              <li><strong>Coach's Permission:</strong> ${data.CoachPermission || "Not Provided"}</li>
+              <li><strong>Zone/Home Campus:</strong> ${data.ZoneHomeCampus || "Not Provided"}</li>
+            </ul>
+            <p class="note">
+              Please Note: These course requests are subject to change due to course
+              availability and other scheduling factors.
+            </p>
+          `;
+        } else {
+          document.getElementById("main-container").innerHTML = `
+            <h1>Error Loading Data</h1>
+            <p>We could not find data for the Student ID provided. Please contact support.</p>
+          `;
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        document.getElementById("main-container").innerHTML = `
+          <h1>Error Loading Data</h1>
+          <p>An error occurred while fetching the data. Please try again later.</p>
+        `;
+      }
+    }
+
+    // Send confirmation
+    function handleSubmit() {
+      const submitButton = document.getElementById("submit-button");
+      submitButton.disabled = true;
+      submitButton.textContent = "Confirming...";
+
+      const payload = {
+        StudentID: studentID,
+        FirstName: firstName,
+        LastName: lastName,
+        StudentResponse: "Confirmed"
+      };
+
+      fetch(APPROVAL_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      })
+        .then((response) => {
+          if (response.ok) {
+            document.getElementById("main-container").innerHTML = `
+              <div class="thank-you">
+                <h1>Thank You!</h1>
+                <p>Your course requests have been successfully submitted.</p>
+                <p>If you have further questions, please contact Mrs. Perez at 
+                  <a href="mailto:magdalena.lopez-perez@hcisd.org">magdalena.lopez-perez@hcisd.org</a>.
+                </p>
+              </div>
+            `;
+          } else {
+            throw new Error("Submission failed.");
+          }
+        })
+        .catch(() => {
+          alert("An error occurred. Please try again.");
+          submitButton.disabled = false;
+          submitButton.textContent = "Confirm Requests";
+        });
+    }
+
+    // Load data on page start
+    document.addEventListener("DOMContentLoaded", fetchStudentInfo);
+  </script>
+</body>
+</html>
