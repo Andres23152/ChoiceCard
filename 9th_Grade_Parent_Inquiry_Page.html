@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Parent Course Request Confirmation (10th Grade)</title>
+  <title>HSHP Course Request Inquiry (9th Grade)</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
-      background-color: #f9f9f9;
+      background-color: #ffe6e6; /* Same pinkish background as 8th grade inquiry */
       color: #333;
     }
     .container {
@@ -18,13 +18,13 @@
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      border: 1px solid #005662;
+      border: 1px solid #b71c1c; /* Same red border as 8th grade inquiry */
     }
     .header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 4px solid #005662;
+      border-bottom: 4px solid #b71c1c;
       padding-bottom: 15px;
     }
     .logo {
@@ -33,16 +33,29 @@
     }
     h1 {
       font-size: 1.8em;
-      color: #005662;
+      color: #b71c1c; /* Same bold red title color */
       margin: 0;
       font-weight: bold;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    textarea, input {
+      width: 100%;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 10px;
+      font-size: 1em;
     }
     .button-container {
       text-align: center;
       margin-top: 20px;
     }
     button {
-      background-color: #4CAF50;
+      background-color: #d32f2f; /* Same button color scheme */
       color: white;
       padding: 10px 20px;
       border: none;
@@ -55,13 +68,13 @@
       cursor: not-allowed;
     }
     button:hover {
-      background-color: #45a049;
+      background-color: #b71c1c;
     }
     .student-info {
       margin-top: 15px;
       padding: 10px;
-      background-color: #e6f7ff;
-      border: 1px solid #99d6ff;
+      background-color: #ffebee;
+      border: 1px solid #ffcdd2;
       border-radius: 4px;
     }
     .footer {
@@ -69,21 +82,13 @@
       margin-top: 20px;
       font-size: 0.8em;
       color: #666;
-      border-top: 2px solid #005662;
+      border-top: 2px solid #b71c1c;
       padding-top: 10px;
     }
-    .note {
-      font-size: 15px;
-      color: #ff0000;
-      margin-top: 20px;
-      font-style: italic;
-      text-align: center;
-      font-weight: bold;
-    }
     .thank-you {
-      background-color: #f0fff0;
-      border: 1px solid #b2d8b2;
-      color: #2e8b57;
+      background-color: #fff3f3;
+      border: 1px solid #ffcdd2;
+      color: #b71c1c;
       border-radius: 8px;
       padding: 20px;
       margin-top: 20px;
@@ -92,28 +97,18 @@
     .thank-you h1 {
       margin-bottom: 10px;
       font-size: 1.6em;
-      color: #2e8b57;
+      color: #b71c1c;
     }
     .thank-you a {
-      color: #2e8b57;
+      color: #b71c1c;
       text-decoration: underline;
     }
-    ul li {
-      margin-bottom: 8px;
-    }
-    textarea {
-      width: 100%;
-      height: 100px;
-      margin: 10px 0;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      resize: vertical;
-    }
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
+    .note {
+      font-size: 15px;
+      color: #b71c1c;
+      margin-top: 20px;
+      font-style: italic;
+      text-align: center;
     }
   </style>
 </head>
@@ -121,18 +116,16 @@
   <div class="container" id="main-container">
     <!-- HEADER -->
     <div class="header">
-      <h1 id="title">Parent Course Request Confirmation for Loading...</h1>
+      <h1 id="title">Course Request Inquiry for Loading...</h1>
       <img 
         src="https://hshpnews.wordpress.com/wp-content/uploads/2015/11/logo-hshp.png?w=410&h=310" 
-        alt="HSHP Logo" 
+        alt="HSHP Logo"
         class="logo"
       >
     </div>
 
-    <!-- INTRO TEXT -->
-    <p>Please review the following 10th grade course requests and details carefully. Your response is required to confirm this information.</p>
+    <p>Please review the following <strong>9th grade</strong> course requests. If you have questions or concerns, complete the form below to request a callback.</p>
 
-    <!-- STUDENT INFO PLACEHOLDER -->
     <div id="student-info" class="student-info">
       <p><strong>Student ID:</strong> Loading...</p>
       <h3>Course Requests:</h3>
@@ -147,14 +140,6 @@
         <li><strong>Physical Education:</strong> Loading...</li>
         <li><strong>Electives:</strong> Loading...</li>
       </ul>
-
-      <!-- LVN Program -->
-      <h3>LVN Program:</h3>
-      <ul>
-        <li><strong>Interested in LVN Program for Junior Year?</strong> Loading...</li>
-      </ul>
-
-      <!-- Off-Campus Extracurricular -->
       <h3>Off-Campus Extracurricular:</h3>
       <ul>
         <li><strong>Participating?</strong> Loading...</li>
@@ -162,49 +147,49 @@
         <li><strong>Coach's Permission:</strong> Loading...</li>
         <li><strong>Zone/Home Campus:</strong> Loading...</li>
       </ul>
-
-      <p class="note">
-        Please Note: These course requests are subject to change due to course
-        availability and other scheduling factors.
-      </p>
     </div>
 
-    <!-- COMMENTS TEXTAREA -->
-    <label for="comments">Additional Comments (optional):</label>
-    <textarea id="comments" placeholder="Enter any comments here"></textarea>
-
-    <!-- CONFIRM BUTTON -->
-    <div class="button-container">
-      <button type="button" id="submit-button" onclick="handleSubmit()">
-        Confirm Requests
-      </button>
+    <div id="response-container">
+      <label for="phone">Parent Contact Number (required):</label>
+      <input type="tel" id="phone" placeholder="(XXX) XXX-XXXX" required maxlength="14">
+      
+      <label for="comments">Please describe your questions or concerns (required):</label>
+      <textarea id="comments" placeholder="Enter your questions or concerns here"></textarea>
+      
+      <div class="button-container">
+        <button type="button" id="submit-button" onclick="handleSubmit()">Request Callback</button>
+      </div>
     </div>
 
-    <!-- FOOTER -->
+    <p class="note">We will contact you at the provided phone number to discuss your inquiry.</p>
+
     <div class="footer">
       <p>&copy; 2025 Harlingen School of Health Professions. For internal use only.</p>
-      <p>For questions or concerns, please contact Mrs. Perez at <a href="mailto:magdalena.lopez-perez@hcisd.org">magdalena.lopez-perez@hcisd.org</a>.</p>
+      <p>If you have any questions or concerns, please contact Mrs. Perez at 
+        <a href="mailto:magdalena.lopez-perez@hcisd.org">magdalena.lopez-perez@hcisd.org</a>.
+      </p>
     </div>
   </div>
 
   <script>
     /*
-     * FLOW_ENDPOINT: for fetching 10th grade student data (for parents).
-     * APPROVAL_ENDPOINT: for submitting parent's confirmation.
+     * FLOW_ENDPOINT: The Logic App endpoint for fetching the 9th grade student data
+     * INQUIRY_ENDPOINT: The Logic App endpoint for submitting the parent's inquiry
+     * (Adjust these to your actual endpoints)
      */
     const FLOW_ENDPOINT = 
       "https://prod-51.westus.logic.azure.com:443/workflows/972d756d204149d39f15c368394b6075/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=HYhiocLYasW9SGQpEJa_dxlShKYpViS_A_dhibE9c4Y";
 
-    const APPROVAL_ENDPOINT = 
-      "https://prod-185.westus.logic.azure.com:443/workflows/b94e3df7c1624195a28b8a992c785b82/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pp-xsHMX3VpiPEQMUqNaA7j8Ff5Glbo0eQ4qk7Dp_JE";
+    const INQUIRY_ENDPOINT = 
+      "https://prod-113.westus.logic.azure.com:443/workflows/c44d6591680741439c0412250fc8edd3/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=GS6_KY-4ZGDk2EqpUbptxMHlwqUMH83UZjB7l6zq_hk";
 
-    // Parse query params
+    // Retrieve query params
     const queryParams = new URLSearchParams(window.location.search);
     const studentID = queryParams.get("StudentID") || "Unknown";
     const firstName = queryParams.get("FirstName") || "";
-    const lastName  = queryParams.get("LastName") || "";
+    const lastName = queryParams.get("LastName") || "";
 
-    // Fetch 10th grade course info
+    // Fetch 9th grade student info
     async function fetchStudentInfo() {
       try {
         const response = await fetch(
@@ -213,25 +198,23 @@
         const data = await response.json();
 
         if (data) {
-          // If parent already confirmed
-          if (data.ParentResponse === "Confirmed") {
+          // If an inquiry is already submitted (ParentResponse = "Rejected"), show a message
+          if (data.ParentResponse === "Rejected") {
             document.getElementById("main-container").innerHTML = `
               <div class="thank-you">
-                <h1>Thank You!</h1>
-                <p>Your course request confirmation has already been submitted.</p>
-                <p>If you have further questions, please contact Mrs. Perez at 
-                  <a href="mailto:magdalena.lopez-perez@hcisd.org">magdalena.lopez-perez@hcisd.org</a>.
-                </p>
+                <h1>Inquiry Already Submitted</h1>
+                <p>You have already submitted an inquiry for these 9th grade course requests.</p>
+                <p>We will contact you soon at the phone number you provided.</p>
               </div>
             `;
             return;
           }
 
-          // Update Title
+          // Update title
           document.querySelector("#title").textContent = 
-            `Parent Course Request Confirmation for ${data.FirstName || "Student"} ${data.LastName || ""}`;
+            `Course Request Inquiry for ${data.FirstName || "Student"} ${data.LastName || ""}`;
 
-          // Populate 10th grade courses
+          // Populate 9th grade fields
           document.querySelector("#student-info").innerHTML = `
             <p><strong>Student ID:</strong> ${studentID}</p>
             <h3>Course Requests:</h3>
@@ -246,10 +229,6 @@
               <li><strong>Physical Education:</strong> ${data.PhysicalEducation || "Not Provided"}</li>
               <li><strong>Electives:</strong> ${data.Electives || "Not Provided"}</li>
             </ul>
-            <h3>LVN Program:</h3>
-            <ul>
-              <li><strong>Interested in LVN Program for Junior Year?</strong> ${data.LVN?.['x003f_'] || "Not Provided"}</li>
-            </ul>
             <h3>Off-Campus Extracurricular:</h3>
             <ul>
               <li><strong>Participating?</strong> ${data.OffCampusExtracurricular || "Not Provided"}</li>
@@ -257,10 +236,6 @@
               <li><strong>Coach's Permission:</strong> ${data.CoachesPermission || "Not Provided"}</li>
               <li><strong>Zone/Home Campus:</strong> ${data.ZoneCampus || "Not Provided"}</li>
             </ul>
-            <p class="note">
-              Please Note: These course requests are subject to change due to course
-              availability and other scheduling factors.
-            </p>
           `;
         } else {
           document.getElementById("main-container").innerHTML = `
@@ -277,23 +252,58 @@
       }
     }
 
-    // Handle parent's confirmation
+    // Format phone input as user types
+    document.addEventListener("DOMContentLoaded", () => {
+      const phoneInput = document.getElementById("phone");
+      if (phoneInput) {
+        phoneInput.addEventListener("input", (e) => {
+          let input = e.target.value.replace(/\D/g, ""); // remove non-numerics
+          let formatted = "";
+          if (input.length > 0) {
+            formatted += "(" + input.substring(0, 3);
+          }
+          if (input.length >= 4) {
+            formatted += ") " + input.substring(3, 6);
+          }
+          if (input.length >= 7) {
+            formatted += "-" + input.substring(6, 10);
+          }
+          e.target.value = formatted;
+        });
+      }
+      fetchStudentInfo();
+    });
+
+    // Handle submission of inquiry
     function handleSubmit() {
-      const comments = document.getElementById("comments")?.value || "";
+      const phone = document.getElementById("phone").value.trim();
+      const comments = document.getElementById("comments").value.trim();
+
+      if (!phone || phone.length !== 14) {
+        alert("Please enter a valid 10-digit phone number.");
+        return;
+      }
+      if (!comments) {
+        alert("Please provide your questions or concerns.");
+        return;
+      }
+
       const submitButton = document.getElementById("submit-button");
       submitButton.disabled = true;
-      submitButton.textContent = "Confirming...";
+      submitButton.textContent = "Submitting...";
 
-      // Build payload with parent's confirmation & optional comments
+      // "Rejected" is used to indicate an inquiry was submitted 
+      // (just like 8th grade logic)
       const payload = {
         StudentID: studentID,
         FirstName: firstName,
         LastName: lastName,
-        ParentResponse: "Confirmed",
+        ParentPhoneNumber: phone,
+        ParentResponse: "Rejected",
         Comments: comments
       };
 
-      fetch(APPROVAL_ENDPOINT, {
+      fetch(INQUIRY_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -303,10 +313,8 @@
             document.getElementById("main-container").innerHTML = `
               <div class="thank-you">
                 <h1>Thank You!</h1>
-                <p>Your course request confirmation has been successfully submitted.</p>
-                <p>If you have further questions, please contact Mrs. Perez at 
-                  <a href="mailto:magdalena.lopez-perez@hcisd.org">magdalena.lopez-perez@hcisd.org</a>.
-                </p>
+                <p>Your inquiry has been successfully submitted for the 9th grade course requests.</p>
+                <p>We will contact you soon at the phone number provided.</p>
               </div>
             `;
           } else {
@@ -316,12 +324,9 @@
         .catch(() => {
           alert("An error occurred. Please try again.");
           submitButton.disabled = false;
-          submitButton.textContent = "Confirm Requests";
+          submitButton.textContent = "Request Callback";
         });
     }
-
-    // On page load
-    document.addEventListener("DOMContentLoaded", fetchStudentInfo);
   </script>
 </body>
 </html>
