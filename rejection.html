@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HSHP Rejection Page</title>
+  <title>HSHP Course Request Inquiry</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
-      background-color: #ffe6e6; /* Light red background */
+      background-color: #ffe6e6;
       color: #333;
     }
     .container {
@@ -18,11 +18,14 @@
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border: 1px solid #b71c1c;
     }
     .header {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      border-bottom: 4px solid #b71c1c;
+      padding-bottom: 15px;
     }
     .logo {
       width: 80px;
@@ -30,7 +33,9 @@
     }
     h1 {
       font-size: 1.8em;
-      color: #b71c1c; /* Dark red for emphasis */
+      color: #b71c1c;
+      margin: 0;
+      font-weight: bold;
     }
     label {
       display: block;
@@ -50,7 +55,7 @@
       margin-top: 20px;
     }
     button {
-      background-color: #f44336; /* Red button */
+      background-color: #d32f2f;
       color: white;
       padding: 10px 20px;
       border: none;
@@ -63,25 +68,27 @@
       cursor: not-allowed;
     }
     button:hover {
-      background-color: #e53935; /* Darker red on hover */
+      background-color: #b71c1c;
     }
     .student-info {
       margin-top: 15px;
       padding: 10px;
       background-color: #ffebee;
-      border: 1px solid #ffccd5;
+      border: 1px solid #ffcdd2;
       border-radius: 4px;
     }
     .footer {
       text-align: center;
       margin-top: 20px;
-      font-size: 0.9em;
+      font-size: 0.8em;
       color: #666;
+      border-top: 2px solid #b71c1c;
+      padding-top: 10px;
     }
     .thank-you {
       background-color: #fff3f3;
-      border: 1px solid #f5b5b5;
-      color: #d32f2f;
+      border: 1px solid #ffcdd2;
+      color: #b71c1c;
       border-radius: 8px;
       padding: 20px;
       margin-top: 20px;
@@ -96,112 +103,128 @@
       color: #b71c1c;
       text-decoration: underline;
     }
+    .note {
+      font-size: 15px;
+      color: #b71c1c;
+      margin-top: 20px;
+      font-style: italic;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
   <div class="container" id="main-container">
     <div class="header">
-      <h1 id="title">Parent/Guardian Course Request Rejection for Loading...</h1>
+      <h1 id="title">Course Request Inquiry for Loading...</h1>
       <img src="https://hshpnews.wordpress.com/wp-content/uploads/2015/11/logo-hshp.png?w=410&h=310" alt="HSHP Logo" class="logo">
     </div>
 
-    <p id="instructions">Please review the following course requests and student details carefully. If you decide to request changes, provide your reasons in the comments section below.</p>
+    <p>Please review the following course requests. If you have questions or concerns, complete the form below to request a callback.</p>
 
     <div id="student-info" class="student-info">
       <p><strong>Student ID:</strong> Loading...</p>
-      <h3>Selected Options:</h3>
+      <h3>Course Requests:</h3>
       <ul>
-        <li><strong>English:</strong> Loading...</li>
-        <li><strong>Social Studies:</strong> Loading...</li>
-        <li><strong>Practicum:</strong> Loading...</li>
+        <li><strong>Reading PAP:</strong> Loading...</li>
+        <li><strong>Mathematics:</strong> Loading...</li>
+        <li><strong>Science:</strong> Loading...</li>
+        <li><strong>Social Studies PAP:</strong> Loading...</li>
+        <li><strong>Foreign Language:</strong> Loading...</li>
+        <li><strong>Health Science:</strong> Loading...</li>
         <li><strong>Electives:</strong> Loading...</li>
-        <li><strong>Off-Campus Activities:</strong> Loading...</li>
-        <li><strong>Student Comments:</strong> Loading...</li>
       </ul>
     </div>
 
     <div id="response-container">
       <label for="phone">Parent Contact Number (required):</label>
-      <input type="tel" id="phone" placeholder="(XXX) XXX - XXXX" required maxlength="14">
-
-      <label for="comments">Comments (required):</label>
-      <textarea id="comments" placeholder="Enter your comments here"></textarea>
-
+      <input type="tel" id="phone" placeholder="(XXX) XXX-XXXX" required maxlength="14">
+      
+      <label for="comments">Please describe your questions or concerns (required):</label>
+      <textarea id="comments" placeholder="Enter your questions or concerns here"></textarea>
+      
       <div class="button-container">
-        <button type="button" id="submit-button" onclick="handleSubmit()">Submit Request for Changes</button>
+        <button type="button" id="submit-button" onclick="handleSubmit()">Request Callback</button>
       </div>
     </div>
 
+    <p class="note">We will contact you at the provided phone number to discuss your inquiry.</p>
+
     <div class="footer">
-      <p>Your feedback is confidential and securely processed by HSHP systems.</p>
       <p>&copy; 2025 Harlingen School of Health Professions. For internal use only.</p>
-      <p>For questions or concerns, please contact us.</p>
+      <p>If you have any questions or concerns, please contact Mrs. Perez at <a href="mailto:magdalena.lopez-perez@hcisd.org">magdalena.lopez-perez@hcisd.org</a>.</p>
     </div>
   </div>
 
   <script>
-    const GET_ENDPOINT = "https://prod-51.westus.logic.azure.com:443/workflows/972d756d204149d39f15c368394b6075/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=HYhiocLYasW9SGQpEJa_dxlShKYpViS_A_dhibE9c4Y";
-    const REJECTION_ENDPOINT = "https://prod-113.westus.logic.azure.com:443/workflows/c44d6591680741439c0412250fc8edd3/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=GS6_KY-4ZGDk2EqpUbptxMHlwqUMH83UZjB7l6zq_hk";
+    const FLOW_ENDPOINT = "https://prod-51.westus.logic.azure.com:443/workflows/972d756d204149d39f15c368394b6075/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=HYhiocLYasW9SGQpEJa_dxlShKYpViS_A_dhibE9c4Y";
+    const INQUIRY_ENDPOINT = "https://prod-113.westus.logic.azure.com:443/workflows/c44d6591680741439c0412250fc8edd3/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=GS6_KY-4ZGDk2EqpUbptxMHlwqUMH83UZjB7l6zq_hk";
 
     const queryParams = new URLSearchParams(window.location.search);
     const studentID = queryParams.get("StudentID") || "Unknown";
+    const firstName = queryParams.get("FirstName") || "";
+    const lastName = queryParams.get("LastName") || "";
 
     async function fetchStudentInfo() {
       try {
-        const response = await fetch(`${GET_ENDPOINT}&StudentID=${studentID}`);
+        const response = await fetch(`${FLOW_ENDPOINT}&StudentID=${studentID}&FirstName=${firstName}&LastName=${lastName}`);
         const data = await response.json();
 
         if (data) {
-          document.querySelector("#title").textContent = `Parent/Guardian Course Request Rejections for ${data.FirstName} ${data.LastName}`;
+          if (data.ParentResponse === "Rejected") {
+            document.getElementById("main-container").innerHTML = `
+              <div class="thank-you">
+                <h1>Inquiry Already Submitted</h1>
+                <p>You have already submitted an inquiry for this course request.</p>
+                <p>We will contact you soon at the phone number provided.</p>
+              </div>
+            `;
+            return;
+          }
+
+          document.querySelector("#title").textContent = `Course Request Inquiry for ${data.FirstName || "Student"} ${data.LastName || ""}`;
+
           document.querySelector("#student-info").innerHTML = `
             <p><strong>Student ID:</strong> ${studentID}</p>
-            <h3>Selected Options:</h3>
+            <h3>Course Requests:</h3>
             <ul>
-              <li><strong>English:</strong> ${data.English}</li>
-              <li><strong>Social Studies:</strong> ${data.SocialStudies}</li>
-              <li><strong>Practicum:</strong> ${data.Practicum}</li>
-              <li><strong>Electives:</strong> ${data.Electives}</li>
-              <li><strong>Off-Campus Activities:</strong> ${data.OffCampusExtracurricular}</li>
-              <li><strong>Student Comments:</strong> ${data.StudentComments}</li>
-            </ul>`;
-
-          if (data.Status === "Rejected") {
-            document.querySelector("#main-container").innerHTML = `
-              <div class="thank-you">
-                <h1>Changes Already Requested</h1>
-                <p>The selected options for ${data.FirstName} ${data.LastName} have already been flagged for changes. No further action is needed.</p>
-                <p>If you have any questions, please contact us.</p>
-              </div>`;
-          }
+              <li><strong>Reading PAP:</strong> All students will be enrolled in Reading PAP</li>
+              <li><strong>Mathematics:</strong> ${data.Mathematics || "Not Provided"}</li>
+              <li><strong>Science:</strong> ${data.Science || "Not Provided"}</li>
+              <li><strong>Social Studies PAP:</strong> All students will be enrolled in Social Studies PAP</li>
+              <li><strong>Foreign Language:</strong> ${data.ForeignLanguage || "Not Provided"}</li>
+              <li><strong>Health Science:</strong> ${data.HealthScience || "Not Provided"}</li>
+              <li><strong>Electives:</strong> ${data.Electives || "Not Provided"}</li>
+            </ul>
+          `;
         } else {
           document.getElementById("main-container").innerHTML = `
             <h1>Error Loading Data</h1>
-            <p>We could not find data for the Student ID provided. Please contact support.</p>`;
+            <p>We could not find data for the Student ID provided. Please contact support.</p>
+          `;
         }
       } catch (error) {
         console.error("Error fetching data:", error);
         document.getElementById("main-container").innerHTML = `
           <h1>Error Loading Data</h1>
-          <p>An error occurred while fetching the data. Please try again later.</p>`;
+          <p>An error occurred while fetching the data. Please try again later.</p>
+        `;
       }
     }
 
-document.getElementById("phone").addEventListener("input", function(e) {
-  let input = e.target.value.replace(/\D/g, ""); // Remove all non-digit characters
-  let formatted = "";
-
-  if (input.length > 0) {
-    formatted += "(" + input.substring(0, 3);
-  }
-  if (input.length >= 4) {
-    formatted += ") " + input.substring(3, 6);
-  }
-  if (input.length >= 7) {
-    formatted += "-" + input.substring(6, 10);
-  }
-  
-  e.target.value = formatted; // Update the value with the formatted string
-});
+    document.getElementById("phone").addEventListener("input", function(e) {
+      let input = e.target.value.replace(/\D/g, "");
+      let formatted = "";
+      if (input.length > 0) {
+        formatted += "(" + input.substring(0, 3);
+      }
+      if (input.length >= 4) {
+        formatted += ") " + input.substring(3, 6);
+      }
+      if (input.length >= 7) {
+        formatted += "-" + input.substring(6, 10);
+      }
+      e.target.value = formatted;
+    });
 
     function handleSubmit() {
       const phone = document.getElementById("phone").value.trim();
@@ -211,33 +234,46 @@ document.getElementById("phone").addEventListener("input", function(e) {
         alert("Please enter a valid 10-digit phone number.");
         return;
       }
-
       if (!comments) {
-        alert("Please provide comments explaining the reason for requesting changes.");
+        alert("Please provide comments explaining your inquiry.");
         return;
       }
 
-      const payload = { StudentID: studentID, ParentPhoneNumber: phone, Action: "Rejected", Comments: comments };
+      const submitButton = document.getElementById("submit-button");
+      submitButton.disabled = true;
+      submitButton.textContent = "Submitting...";
 
-      fetch(REJECTION_ENDPOINT, {
+      const payload = {
+        StudentID: studentID,
+        FirstName: firstName,
+        LastName: lastName,
+        ParentPhoneNumber: phone,
+        ParentResponse: "Rejected",
+        Comments: comments
+      };
+
+      fetch(INQUIRY_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
       })
-        .then((response) => {
+        .then(response => {
           if (response.ok) {
             document.getElementById("main-container").innerHTML = `
               <div class="thank-you">
                 <h1>Thank You!</h1>
-                <p>Your request for changes has been successfully submitted.</p>
-                <p>We will be in contact with you soon.</p>
-              </div>`;
+                <p>Your inquiry has been successfully submitted.</p>
+                <p>We will contact you soon at the phone number provided.</p>
+              </div>
+            `;
           } else {
             throw new Error("Submission failed.");
           }
         })
         .catch(() => {
           alert("An error occurred. Please try again.");
+          submitButton.disabled = false;
+          submitButton.textContent = "Request Callback";
         });
     }
 
@@ -245,3 +281,4 @@ document.getElementById("phone").addEventListener("input", function(e) {
   </script>
 </body>
 </html>
+
