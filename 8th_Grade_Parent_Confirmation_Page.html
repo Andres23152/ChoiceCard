@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parent Course Request Confirmation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border: 1px solid #005662;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 4px solid #005662;
+      padding-bottom: 15px;
+    }
+    .logo {
+      width: 80px;
+      height: auto;
+    }
+    h1 {
+      font-size: 1.8em;
+      color: #005662;
+      margin: 0;
+      font-weight: bold;
+    }
+    .button-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    button:disabled {
+      background-color: #999;
+      cursor: not-allowed;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .student-info {
+      margin-top: 15px;
+      padding: 10px;
+      background-color: #e6f7ff;
+      border: 1px solid #99d6ff;
+      border-radius: 4px;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.8em;
+      color: #666;
+      border-top: 2px solid #005662;
+      padding-top: 10px;
+    }
+    .note {
+      font-size: 15px;
+      color: #ff0000;
+      margin-top: 20px;
+      font-style: italic;
+      text-align: center;
+      font-weight: bold;
+    }
+    .thank-you {
+      background-color: #f0fff0;
+      border: 1px solid #b2d8b2;
+      color: #2e8b57;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+      text-align: center;
+    }
+    .thank-you h1 {
+      margin-bottom: 10px;
+      font-size: 1.6em;
+      color: #2e8b57;
+    }
+    .thank-you a {
+      color: #2e8b57;
+      text-decoration: underline;
+    }
+    ul li {
+      margin-bottom: 8px;
+    }
+    textarea {
+      width: 100%;
+      height: 100px;
+      margin: 10px 0;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="main-container">
+    <div class="header">
+      <h1 id="title">Parent Course Request Confirmation for Loading...</h1>
+      <img src="https://hshpnews.wordpress.com/wp-content/uploads/2015/11/logo-hshp.png?w=410&h=310" alt="HSHP Logo" class="logo">
+    </div>
+
+    <p>Please review the following course requests and details carefully. Your response is required to confirm this information.</p>
+
+    <div id="student-info" class="student-info">
+      <p><strong>Student ID:</strong> Loading...</p>
+      <h3>Course Requests:</h3>
+      <ul>
+        <li><strong>Reading PAP:</strong> Loading...</li>
+        <li><strong>Mathematics:</strong> Loading...</li>
+        <li><strong>Science:</strong> Loading...</li>
+        <li><strong>Social Studies PAP:</strong> Loading...</li>
+        <li><strong>Foreign Language:</strong> Loading...</li>
+        <li><strong>Health Science:</strong> Loading...</li>
+        <li><strong>Electives:</strong> Loading...</li>
+      </ul>
+      <p class="note">Please Note: These course requests are subject to change due to course availability and other scheduling factors.</p>
+    </div>
+
+    <label for="comments">Additional Comments (optional):</label>
+    <textarea id="comments" placeholder="Enter any comments here"></textarea>
+
+    <div class="button-container">
+      <button type="button" id="submit-button" onclick="handleSubmit()">Confirm Requests</button>
+    </div>
+
+    <div class="footer">
+      <p>&copy; 2025 Harlingen School of Health Professions. For internal use only.</p>
+      <p>For questions or concerns, please contact Mrs. Perez at <a href="mailto:magdalena.lopez-perez@hcisd.org">magdalena.lopez-perez@hcisd.org</a>.</p>
+    </div>
+  </div>
+
+  <script>
+    const FLOW_ENDPOINT = "https://prod-51.westus.logic.azure.com:443/workflows/972d756d204149d39f15c368394b6075/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=HYhiocLYasW9SGQpEJa_dxlShKYpViS_A_dhibE9c4Y";
+
+    const queryParams = new URLSearchParams(window.location.search);
+    const studentID = queryParams.get("StudentID") || "Unknown";
+    const firstName = queryParams.get("FirstName") || "";
+    const lastName = queryParams.get("LastName") || "";
+
+    async function fetchStudentInfo() {
+      try {
+        const response = await fetch(`${FLOW_ENDPOINT}&StudentID=${studentID}&FirstName=${firstName}&LastName=${lastName}`);
+        const data = await response.json();
+
+        if (data) {
+          if (data.ParentResponse === "Confirmed") {
+            document.getElementById("main-container").innerHTML = `
+              <div class="thank-you">
+                <h1>Thank You!</h1>
+                <p>Your course request confirmation has already been submitted.</p>
+                <p>If you have further questions, please contact Mrs. Perez at <a href="mailto:magdalena.lopez-perez@hcisd.org">magdalena.lopez-perez@hcisd.org</a>.</p>
+              </div>
+            `;
+            return;
+          }
+
+          document.querySelector("#title").textContent = `Parent Course Request Confirmation for ${data.FirstName || "Student"} ${data.LastName || ""}`;
+
+          document.querySelector("#student-info").innerHTML = `
+            <p><strong>Student ID:</strong> ${studentID}</p>
+            <h3>Course Requests:</h3>
+            <ul>
+              <li><strong>Reading PAP:</strong> All students will be enrolled in Reading PAP</li>
+              <li><strong>Mathematics:</strong> ${data.Mathematics || "Not Provided"}</li>
+              <li><strong>Science:</strong> ${data.Science || "Not Provided"}</li>
+              <li><strong>Social Studies PAP:</strong> All students will be enrolled in Social Studies PAP</li>
+              <li><strong>Foreign Language:</strong> ${data.ForeignLanguage || "Not Provided"}</li>
+              <li><strong>Health Science:</strong> ${data.HealthScience || "Not Provided"}</li>
+              <li><strong>Electives:</strong> ${data.Electives || "Not Provided"}</li>
+            </ul>
+            <p class="note">Please Note: These course requests are subject to change due to course availability and other scheduling factors.</p>
+          `;
+        } else {
+          document.getElementById("main-container").innerHTML = `
+            <h1>Error Loading Data</h1>
+            <p>We could not find data for the Student ID provided. Please contact support.</p>
+          `;
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        document.getElementById("main-container").innerHTML = `
+          <h1>Error Loading Data</h1>
+          <p>An error occurred while fetching the data. Please try again later.</p>
+        `;
+      }
+    }
+
+    const APPROVAL_ENDPOINT = "https://prod-185.westus.logic.azure.com:443/workflows/b94e3df7c1624195a28b8a992c785b82/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pp-xsHMX3VpiPEQMUqNaA7j8Ff5Glbo0eQ4qk7Dp_JE";
+
+    function handleSubmit() {
+      const comments = document.getElementById("comments").value;
+      const submitButton = document.getElementById("submit-button");
+      submitButton.disabled = true;
+      submitButton.textContent = "Confirming...";
+
+      const payload = { 
+        StudentID: studentID,
+        FirstName: firstName,
+        LastName: lastName,
+        ParentResponse: "Confirmed",
+        Comments: comments 
+      };
+
+      fetch(APPROVAL_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      })
+        .then(response => {
+          if (response.ok) {
+            document.getElementById("main-container").innerHTML = `
+              <div class="thank-you">
+                <h1>Thank You!</h1>
+                <p>Your course request confirmation has been successfully submitted.</p>
+                <p>If you have further questions, please contact Mrs. Perez at <a href="mailto:magdalena.lopez-perez@hcisd.org">magdalena.lopez-perez@hcisd.org</a>.</p>
+              </div>
+            `;
+          } else {
+            throw new Error("Submission failed.");
+          }
+        })
+        .catch(() => {
+          alert("An error occurred. Please try again.");
+          submitButton.disabled = false;
+          submitButton.textContent = "Confirm Requests";
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", fetchStudentInfo);
+  </script>
+</body>
+</html>
