@@ -3,12 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>HSHP Course Request Inquiry (10th Grade)</title>
+  <title id="pageTitle">HSHP Course Request Inquiry (10th Grade)</title>
   <style>
-    /* 
-      Using the same pinkish background (#ffe6e6) and bold red (#b71c1c) scheme 
-      as your 8th-grade inquiry page for consistency 
-    */
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
@@ -117,13 +113,38 @@
     ul li {
       margin-bottom: 8px;
     }
+
+    /* Center the translate button at the top */
+    #translate-button-container {
+      text-align: center;
+      margin: 15px 0;
+    }
+    #translate-button {
+      font-size: 1.2em;
+      padding: 10px 30px;
+      background-color: #ffc107; /* A bright color to stand out */
+      color: #333;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    #translate-button:hover {
+      background-color: #ffb300;
+    }
+
   </style>
 </head>
 <body>
+  <!-- TRANSLATE BUTTON -->
+  <div id="translate-button-container">
+    <button id="translate-button" onclick="toggleLanguage()">Spanish</button>
+  </div>
+
   <div class="container" id="main-container">
     <!-- HEADER -->
     <div class="header">
-      <h1 id="title">Course Request Inquiry for Loading...</h1>
+      <h1 id="titleStatic">Course Request Inquiry for <span id="loadingStudentName">Loading...</span></h1>
       <img 
         src="https://hshpnews.wordpress.com/wp-content/uploads/2015/11/logo-hshp.png?w=410&h=310"
         alt="HSHP Logo"
@@ -131,46 +152,49 @@
       >
     </div>
 
-    <p>Please review the following <strong>10th grade</strong> course requests. If you have questions or concerns, please complete the form below to request a callback.</p>
+    <p id="instructions">
+      Please review the following <strong>10th grade</strong> course requests. 
+      If you have questions or concerns, please complete the form below to request a callback.
+    </p>
 
     <!-- STUDENT INFO PLACEHOLDER -->
     <div id="student-info" class="student-info">
-      <p><strong>Student ID:</strong> Loading...</p>
-      <h3>Course Requests:</h3>
+      <p><strong>Student ID:</strong> <span id="loadingStudentID">Loading...</span></p>
+      <h3 id="coursesHeader">Course Requests:</h3>
       <ul>
-        <li><strong>English:</strong> Loading...</li>
-        <li><strong>Mathematics:</strong> Loading...</li>
-        <li><strong>Science:</strong> Loading...</li>
-        <li><strong>Social Studies:</strong> Loading...</li>
-        <li><strong>Health Science:</strong> Loading...</li>
-        <li><strong>Foreign Language:</strong> Loading...</li>
-        <li><strong>Fine Arts:</strong> Loading...</li>
-        <li><strong>Physical Education:</strong> Loading...</li>
-        <li><strong>Electives:</strong> Loading...</li>
+        <li><strong>English:</strong> <span id="englishCourse">Loading...</span></li>
+        <li><strong>Mathematics:</strong> <span id="mathCourse">Loading...</span></li>
+        <li><strong>Science:</strong> <span id="scienceCourse">Loading...</span></li>
+        <li><strong>Social Studies:</strong> <span id="socialStudiesCourse">Loading...</span></li>
+        <li><strong>Health Science:</strong> <span id="healthScienceCourse">Loading...</span></li>
+        <li><strong>Foreign Language:</strong> <span id="foreignLanguageCourse">Loading...</span></li>
+        <li><strong>Fine Arts:</strong> <span id="fineArtsCourse">Loading...</span></li>
+        <li><strong>Physical Education:</strong> <span id="peCourse">Loading...</span></li>
+        <li><strong>Electives:</strong> <span id="electivesCourse">Loading...</span></li>
       </ul>
 
       <!-- LVN Program -->
-      <h3>LVN Program:</h3>
+      <h3 id="lvnHeader">LVN Program:</h3>
       <ul>
-        <li><strong>Interested in LVN Program for Junior Year?</strong> Loading...</li>
+        <li><strong id="lvnInterestLabel">Interested in LVN Program for Junior Year?</strong> <span id="lvnInterest">Loading...</span></li>
       </ul>
 
       <!-- Off-Campus Extracurricular -->
-      <h3>Off-Campus Extracurricular:</h3>
+      <h3 id="offCampusHeader">Off-Campus Extracurricular:</h3>
       <ul>
-        <li><strong>Participating?</strong> Loading...</li>
-        <li><strong>Activity Name:</strong> Loading...</li>
-        <li><strong>Coach's Permission:</strong> Loading...</li>
-        <li><strong>Zone/Home Campus:</strong> Loading...</li>
+        <li><strong id="participatingLabel">Participating?</strong> <span id="extracurricularParticipating">Loading...</span></li>
+        <li><strong id="activityNameLabel">Activity Name:</strong> <span id="extracurricularName">Loading...</span></li>
+        <li><strong id="coachPermissionLabel">Coach's Permission:</strong> <span id="coachesPermission">Loading...</span></li>
+        <li><strong id="zoneLabel">Zone/Home Campus:</strong> <span id="zoneCampus">Loading...</span></li>
       </ul>
     </div>
 
     <!-- FORM FOR CALLBACK -->
     <div id="response-container">
-      <label for="phone">Parent Contact Number (required):</label>
+      <label for="phone" id="phoneLabel">Parent Contact Number (required):</label>
       <input type="tel" id="phone" placeholder="(XXX) XXX-XXXX" required maxlength="14">
       
-      <label for="comments">Please describe your questions or concerns (required):</label>
+      <label for="comments" id="commentsLabel">Please describe your questions or concerns (required):</label>
       <textarea id="comments" placeholder="Enter your questions or concerns here"></textarea>
       
       <div class="button-container">
@@ -180,12 +204,16 @@
       </div>
     </div>
 
-    <p class="note">We will contact you at the provided phone number to discuss your inquiry.</p>
+    <p class="note" id="noteText">
+      We will contact you at the provided phone number to discuss your inquiry.
+    </p>
 
     <!-- FOOTER -->
     <div class="footer">
-      <p>&copy; 2025 Harlingen School of Health Professions. For internal use only.</p>
-      <p>
+      <p id="footerCopyright">
+        &copy; 2025 Harlingen School of Health Professions. For internal use only.
+      </p>
+      <p id="footerContact">
         If you have any questions or concerns, please contact Mrs. Perez at 
         <a href="mailto:magdalena.lopez-perez@hcisd.org">magdalena.lopez-perez@hcisd.org</a>.
       </p>
@@ -198,11 +226,113 @@
   </div>
 
   <script>
-    /*
-     * FLOW_ENDPOINT: Logic App for fetching the 10th grade student data
-     * INQUIRY_ENDPOINT: Logic App for submitting parent's inquiry
-     * Adjust these to your actual endpoints
-     */
+    /***************************************************************
+     * 1) Define translations for all static text in English/Spanish
+     ***************************************************************/
+    const translations = {
+      en: {
+        pageTitle: "HSHP Course Request Inquiry (10th Grade)",
+        titleStatic: "Course Request Inquiry for",
+        instructions: "Please review the following <strong>10th grade</strong> course requests. If you have questions or concerns, please complete the form below to request a callback.",
+        phoneLabel: "Parent Contact Number (required):",
+        commentsLabel: "Please describe your questions or concerns (required):",
+        callbackButton: "Request Callback",
+        noteText: "We will contact you at the provided phone number to discuss your inquiry.",
+        footerCopyright: "© 2025 Harlingen School of Health Professions. For internal use only.",
+        footerContact: "If you have any questions or concerns, please contact Mrs. Perez at <a href=\"mailto:magdalena.lopez-perez@hcisd.org\">magdalena.lopez-perez@hcisd.org</a>.",
+        coursesHeader: "Course Requests:",
+        lvnHeader: "LVN Program:",
+        lvnInterestLabel: "Interested in LVN Program for Junior Year?",
+        offCampusHeader: "Off-Campus Extracurricular:",
+        participatingLabel: "Participating?",
+        activityNameLabel: "Activity Name:",
+        coachPermissionLabel: "Coach's Permission:",
+        zoneLabel: "Zone/Home Campus:",
+        errorLoadingDataTitle: "Error Loading Data",
+        errorLoadingDataMessage: "We could not find data for the Student ID provided. Please contact support.",
+        errorFetchingData: "An error occurred while fetching the data. Please try again later.",
+        thankYouTitle: "Thank You!",
+        thankYouMessage: "Your inquiry has been successfully submitted for the 10th grade course requests. We will contact you soon at the phone number provided.",
+        inquiryAlreadySubmittedTitle: "Inquiry Already Submitted",
+        inquiryAlreadySubmittedMessage: "You have already submitted an inquiry for these 10th grade course requests. We will contact you soon at the phone number provided.",
+        phoneNumberError: "Please enter a valid 10-digit phone number.",
+        commentsError: "Please describe your questions or concerns.",
+        fetchError: "An error occurred. Please try again.",
+        translateButton: "Spanish"
+      },
+      es: {
+        pageTitle: "Solicitud de consulta de cursos de HSHP (10º grado)",
+        titleStatic: "Consulta de solicitud de cursos para",
+        instructions: "Por favor revise las siguientes <strong>solicitudes de cursos de 10° grado</strong>. Si tiene preguntas o inquietudes, por favor complete el formulario a continuación para solicitar una devolución de llamada.",
+        phoneLabel: "Número de contacto de los padres (requerido):",
+        commentsLabel: "Por favor describa sus preguntas o inquietudes (requerido):",
+        callbackButton: "Solicitar devolución de llamada",
+        noteText: "Nos pondremos en contacto con usted en el número de teléfono proporcionado para discutir su consulta.",
+        footerCopyright: "© 2025 Escuela de Profesiones de la Salud de Harlingen. Solo para uso interno.",
+        footerContact: "Si tiene alguna pregunta o inquietud, comuníquese con la Sra. Perez en <a href=\"mailto:magdalena.lopez-perez@hcisd.org\">magdalena.lopez-perez@hcisd.org</a>.",
+        coursesHeader: "Solicitudes de cursos:",
+        lvnHeader: "Programa de LVN:",
+        lvnInterestLabel: "¿Interesado en el programa de LVN para el tercer año?",
+        offCampusHeader: "Actividades extracurriculares fuera del campus:",
+        participatingLabel: "¿Participando?",
+        activityNameLabel: "Nombre de la actividad:",
+        coachPermissionLabel: "Permiso del entrenador:",
+        zoneLabel: "Zona/escuela de origen:",
+        errorLoadingDataTitle: "Error al cargar los datos",
+        errorLoadingDataMessage: "No pudimos encontrar datos para la identificación de estudiante proporcionada. Por favor contacte al soporte.",
+        errorFetchingData: "Ocurrió un error al obtener los datos. Por favor intente de nuevo más tarde.",
+        thankYouTitle: "¡Gracias!",
+        thankYouMessage: "Su consulta ha sido enviada con éxito para las solicitudes de cursos de 10° grado. Nos comunicaremos con usted pronto al número de teléfono proporcionado.",
+        inquiryAlreadySubmittedTitle: "Consulta ya enviada",
+        inquiryAlreadySubmittedMessage: "Ya ha enviado una consulta para estas solicitudes de cursos de 10° grado. Nos comunicaremos con usted pronto al número de teléfono proporcionado.",
+        phoneNumberError: "Por favor ingrese un número de teléfono válido de 10 dígitos.",
+        commentsError: "Por favor describa sus preguntas o inquietudes.",
+        fetchError: "Ocurrió un error. Por favor intente de nuevo.",
+        translateButton: "English"
+      }
+    };
+
+    // Keep track of current language (default English)
+    let currentLanguage = 'en';
+
+    /************************************************************************
+     * 2) A function that updates static text on the page based on language
+     ************************************************************************/
+    function updateText(lang) {
+      // Update the <title> element
+      document.getElementById('pageTitle').textContent = translations[lang].pageTitle;
+      
+      // Update all other text by IDs
+      document.getElementById('titleStatic').textContent = translations[lang].titleStatic + " ";
+      document.getElementById('instructions').innerHTML = translations[lang].instructions; 
+      document.getElementById('phoneLabel').textContent = translations[lang].phoneLabel;
+      document.getElementById('commentsLabel').textContent = translations[lang].commentsLabel;
+      document.getElementById('submit-button').textContent = translations[lang].callbackButton;
+      document.getElementById('noteText').textContent = translations[lang].noteText;
+      document.getElementById('footerCopyright').textContent = translations[lang].footerCopyright;
+      document.getElementById('footerContact').innerHTML = translations[lang].footerContact;
+      document.getElementById('coursesHeader').textContent = translations[lang].coursesHeader;
+      document.getElementById('lvnHeader').textContent = translations[lang].lvnHeader;
+      document.getElementById('lvnInterestLabel').textContent = translations[lang].lvnInterestLabel;
+      document.getElementById('offCampusHeader').textContent = translations[lang].offCampusHeader;
+      document.getElementById('participatingLabel').textContent = translations[lang].participatingLabel;
+      document.getElementById('activityNameLabel').textContent = translations[lang].activityNameLabel;
+      document.getElementById('coachPermissionLabel').textContent = translations[lang].coachPermissionLabel;
+      document.getElementById('zoneLabel').textContent = translations[lang].zoneLabel;
+      document.getElementById('translate-button').textContent = translations[lang].translateButton;
+    }
+
+    /************************************************************************
+     * 3) Toggle language function for the big button at the top
+     ************************************************************************/
+    function toggleLanguage() {
+      currentLanguage = (currentLanguage === 'en') ? 'es' : 'en';
+      updateText(currentLanguage);
+    }
+
+    /************************************************************************
+     * 4) Original logic for fetching data from SharePoint (Flow endpoint)
+     ************************************************************************/
     const FLOW_ENDPOINT =
       "https://prod-51.westus.logic.azure.com:443/workflows/972d756d204149d39f15c368394b6075/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=HYhiocLYasW9SGQpEJa_dxlShKYpViS_A_dhibE9c4Y";
 
@@ -228,62 +358,54 @@
           if (data.ParentResponse === "Rejected") {
             document.getElementById("main-container").innerHTML = `
               <div class="thank-you">
-                <h1>Inquiry Already Submitted</h1>
-                <p>You have already submitted an inquiry for these 10th grade course requests.</p>
-                <p>We will contact you soon at the phone number provided.</p>
+                <h1 id="inquiryAlreadySubmittedTitle">${translations[currentLanguage].inquiryAlreadySubmittedTitle}</h1>
+                <p id="inquiryAlreadySubmittedMessage">${translations[currentLanguage].inquiryAlreadySubmittedMessage}</p>
               </div>
             `;
             return;
           }
 
           // Update Title
-          document.querySelector("#title").textContent =
-            `Course Request Inquiry for ${data.FirstName || "Student"} ${data.LastName || ""}`;
+          document.getElementById("loadingStudentName").textContent =
+            `${data.FirstName || "Student"} ${data.LastName || ""}`;
 
           // Populate the 10th grade data
-          document.querySelector("#student-info").innerHTML = `
-            <p><strong>Student ID:</strong> ${studentID}</p>
-            <h3>Course Requests:</h3>
-            <ul>
-              <li><strong>English:</strong> ${data.English || "Not Provided"}</li>
-              <li><strong>Mathematics:</strong> ${data.Mathematics || "Not Provided"}</li>
-              <li><strong>Science:</strong> ${data.Science || "Not Provided"}</li>
-              <li><strong>Social Studies:</strong> ${data.SocialStudies || "Not Provided"}</li>
-              <li><strong>Health Science:</strong> ${data.HealthScience || "Not Provided"}</li>
-              <li><strong>Foreign Language:</strong> ${data.ForeignLanguage || "Not Provided"}</li>
-              <li><strong>Fine Arts:</strong> ${data.FineArts || "Not Provided"}</li>
-              <li><strong>Physical Education:</strong> ${data.PhysicalEducation || "Not Provided"}</li>
-              <li><strong>Electives:</strong> ${data.Electives || "Not Provided"}</li>
-            </ul>
-            <h3>LVN Program:</h3>
-            <ul>
-              <li><strong>Interested in LVN Program for Junior Year?</strong> ${data.LVN_x003f_ || "Not Provided"}</li>
-            </ul>
-            <h3>Off-Campus Extracurricular:</h3>
-            <ul>
-              <li><strong>Participating?</strong> ${data.OffCampusExtracurricular || "Not Provided"}</li>
-              <li><strong>Activity Name:</strong> ${data.ExtracurricularName || "Not Provided"}</li>
-              <li><strong>Coach's Permission:</strong> ${data.CoachesPermission || "Not Provided"}</li>
-              <li><strong>Zone/Home Campus:</strong> ${data.ZoneCampus || "Not Provided"}</li>
-            </ul>
-          `;
+          document.getElementById("loadingStudentID").textContent = studentID;
+          document.getElementById("englishCourse").textContent = data.English || "Not Provided";
+          document.getElementById("mathCourse").textContent = data.Mathematics || "Not Provided";
+          document.getElementById("scienceCourse").textContent = data.Science || "Not Provided";
+          document.getElementById("socialStudiesCourse").textContent = data.SocialStudies || "Not Provided";
+          document.getElementById("healthScienceCourse").textContent = data.HealthScience || "Not Provided";
+          document.getElementById("foreignLanguageCourse").textContent = data.ForeignLanguage || "Not Provided";
+          document.getElementById("fineArtsCourse").textContent = data.FineArts || "Not Provided";
+          document.getElementById("peCourse").textContent = data.PhysicalEducation || "Not Provided";
+          document.getElementById("electivesCourse").textContent = data.Electives || "Not Provided";
+          document.getElementById("lvnInterest").textContent = data.LVN_x003f_ || "Not Provided";
+          document.getElementById("extracurricularParticipating").textContent = data.OffCampusExtracurricular || "Not Provided";
+          document.getElementById("extracurricularName").textContent = data.ExtracurricularName || "Not Provided";
+          document.getElementById("coachesPermission").textContent = data.CoachesPermission || "Not Provided";
+          document.getElementById("zoneCampus").textContent = data.ZoneCampus || "Not Provided";
+
         } else {
           document.getElementById("main-container").innerHTML = `
-            <h1>Error Loading Data</h1>
-            <p>We could not find data for the Student ID provided. Please contact support.</p>
+            <h1>${translations[currentLanguage].errorLoadingDataTitle}</h1>
+            <p>${translations[currentLanguage].errorLoadingDataMessage}</p>
           `;
         }
       } catch (error) {
         console.error("Error fetching data:", error);
         document.getElementById("main-container").innerHTML = `
-          <h1>Error Loading Data</h1>
-          <p>An error occurred while fetching the data. Please try again later.</p>
+          <h1>${translations[currentLanguage].errorLoadingDataTitle}</h1>
+          <p>${translations[currentLanguage].errorFetchingData}</p>
         `;
       }
     }
 
     // 2) Format phone input as user types (optional)
     document.addEventListener("DOMContentLoaded", () => {
+      // Set initial language to English
+      updateText('en');
+
       const phoneInput = document.getElementById("phone");
       if (phoneInput) {
         phoneInput.addEventListener("input", (e) => {
@@ -306,41 +428,41 @@
 
     // 3) Submit callback request
     function showError(message) {
-    document.getElementById("error-message").textContent = message;
-    document.getElementById("error-modal").style.display = "block";
-    document.getElementById("overlay").style.display = "block";
-  }
-
-  function closeModal() {
-    document.getElementById("error-modal").style.display = "none";
-    document.getElementById("overlay").style.display = "none";
-  }
-
-  function handleSubmit() {
-    const phone = document.getElementById("phone").value.trim();
-    const comments = document.getElementById("comments").value.trim();
-
-    if (!phone || phone.length !== 14) {
-      showError("Please enter a valid 10-digit phone number.");
-      return;
+      document.getElementById("error-message").textContent = message;
+      document.getElementById("error-modal").style.display = "block";
+      document.getElementById("overlay").style.display = "block";
     }
-    if (!comments) {
-      showError("Please describe your questions or concerns.");
-      return;
+
+    function closeModal() {
+      document.getElementById("error-modal").style.display = "none";
+      document.getElementById("overlay").style.display = "none";
     }
+
+    function handleSubmit() {
+      const phone = document.getElementById("phone").value.trim();
+      const comments = document.getElementById("comments").value.trim();
+
+      // Basic phone validation: must have 14 chars => "(XXX) XXX-XXXX"
+      if (!phone || phone.length !== 14) {
+        showError(translations[currentLanguage].phoneNumberError);
+        return;
+      }
+      if (!comments) {
+        showError(translations[currentLanguage].commentsError);
+        return;
+      }
 
       const submitButton = document.getElementById("submit-button");
       submitButton.disabled = true;
       submitButton.textContent = "Submitting...";
 
-      // Using "Rejected" to indicate an inquiry was submitted, 
-      // same logic as your 8th/9th grade inquiry
+      // Using "Rejected" to indicate an inquiry was submitted
       const payload = {
         StudentID: studentID,
         FirstName: firstName,
         LastName: lastName,
         ParentPhoneNumber: phone,
-        ParentResponse: "Rejected", 
+        ParentResponse: "Rejected",
         Comments: comments
       };
 
@@ -353,9 +475,8 @@
           if (response.ok) {
             document.getElementById("main-container").innerHTML = `
               <div class="thank-you">
-                <h1>Thank You!</h1>
-                <p>Your inquiry has been successfully submitted for the 10th grade course requests.</p>
-                <p>We will contact you soon at the phone number provided.</p>
+                <h1>${translations[currentLanguage].thankYouTitle}</h1>
+                <p>${translations[currentLanguage].thankYouMessage}</p>
               </div>
             `;
           } else {
@@ -363,9 +484,9 @@
           }
         })
         .catch(() => {
-          alert("An error occurred. Please try again.");
+          alert(translations[currentLanguage].fetchError);
           submitButton.disabled = false;
-          submitButton.textContent = "Request Callback";
+          submitButton.textContent = translations[currentLanguage].callbackButton;
         });
     }
   </script>
