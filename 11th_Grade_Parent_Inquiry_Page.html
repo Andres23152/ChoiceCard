@@ -186,6 +186,11 @@
         <a href="mailto:magdalena.lopez-perez@hcisd.org">magdalena.lopez-perez@hcisd.org</a>.
       </p>
     </div>
+    <div id="error-modal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background-color:white; border:1px solid #b71c1c; padding:20px; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.2); z-index:1000;">
+      <p id="error-message" style="color:#b71c1c; font-weight:bold; text-align:center;"></p>
+      <button onclick="closeModal()" style="background-color:#d32f2f; color:white; border:none; padding:10px 20px; border-radius:5px; cursor:pointer;">Close</button>
+    </div>
+    <div id="overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:999;"></div>
   </div>
 
   <script>
@@ -289,18 +294,29 @@
     }
 
     // Handle submission of the callback request
-    function handleSubmit() {
-      const phone = document.getElementById("phone").value.trim();
-      const comments = document.getElementById("comments").value.trim();
+    function showError(message) {
+    document.getElementById("error-message").textContent = message;
+    document.getElementById("error-modal").style.display = "block";
+    document.getElementById("overlay").style.display = "block";
+  }
 
-      if (!phone || phone.length !== 14) {
-        alert("Please enter a valid 10-digit phone number.");
-        return;
-      }
-      if (!comments) {
-        alert("Please describe your questions or concerns.");
-        return;
-      }
+  function closeModal() {
+    document.getElementById("error-modal").style.display = "none";
+    document.getElementById("overlay").style.display = "none";
+  }
+
+  function handleSubmit() {
+    const phone = document.getElementById("phone").value.trim();
+    const comments = document.getElementById("comments").value.trim();
+
+    if (!phone || phone.length !== 14) {
+      showError("Please enter a valid 10-digit phone number.");
+      return;
+    }
+    if (!comments) {
+      showError("Please describe your questions or concerns.");
+      return;
+    }
 
       const submitButton = document.getElementById("submit-button");
       submitButton.disabled = true;
