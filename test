@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>HSHP Course Request Inquiry (10th Grade)</title>
+  <style>
+    /* 
+      Using the same pinkish background (#ffe6e6) and bold red (#b71c1c) scheme 
+      as your 8th-grade inquiry page for consistency 
+    */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #ffe6e6; 
+      color: #333;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border: 1px solid #b71c1c; 
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 4px solid #b71c1c;
+      padding-bottom: 15px;
+    }
+    .logo {
+      width: 80px;
+      height: auto;
+    }
+    h1 {
+      font-size: 1.8em;
+      color: #b71c1c;
+      margin: 0;
+      font-weight: bold;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    textarea, input {
+      width: 100%;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 10px;
+      font-size: 1em;
+    }
+    .button-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+    button {
+      background-color: #d32f2f; 
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    button:disabled {
+      background-color: #999;
+      cursor: not-allowed;
+    }
+    button:hover {
+      background-color: #b71c1c;
+    }
+    .student-info {
+      margin-top: 15px;
+      padding: 10px;
+      background-color: #ffebee;
+      border: 1px solid #ffcdd2;
+      border-radius: 4px;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.8em;
+      color: #666;
+      border-top: 2px solid #b71c1c;
+      padding-top: 10px;
+    }
+    .thank-you {
+      background-color: #fff3f3;
+      border: 1px solid #ffcdd2;
+      color: #b71c1c;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+      text-align: center;
+    }
+    .thank-you h1 {
+      margin-bottom: 10px;
+      font-size: 1.6em;
+      color: #b71c1c;
+    }
+    .thank-you a {
+      color: #b71c1c;
+      text-decoration: underline;
+    }
+    .note {
+      font-size: 15px;
+      color: #b71c1c;
+      margin-top: 20px;
+      font-style: italic;
+      text-align: center;
+    }
+    ul li {
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="main-container">
+    <!-- HEADER -->
+    <div class="header">
+      <h1 id="title">Course Request Inquiry for Loading...</h1>
+      <img 
+        src="https://hshpnews.wordpress.com/wp-content/uploads/2015/11/logo-hshp.png?w=410&h=310"
+        alt="HSHP Logo"
+        class="logo"
+      >
+    </div>
+
+    <p>Please review the following <strong>10th grade</strong> course requests. If you have questions or concerns, please complete the form below to request a callback.</p>
+
+    <!-- STUDENT INFO PLACEHOLDER -->
+    <div id="student-info" class="student-info">
+      <p><strong>Student ID:</strong> Loading...</p>
+      <h3>Course Requests:</h3>
+      <ul>
+        <li><strong>English:</strong> Loading...</li>
+        <li><strong>Mathematics:</strong> Loading...</li>
+        <li><strong>Science:</strong> Loading...</li>
+        <li><strong>Social Studies:</strong> Loading...</li>
+        <li><strong>Health Science:</strong> Loading...</li>
+        <li><strong>Foreign Language:</strong> Loading...</li>
+        <li><strong>Fine Arts:</strong> Loading...</li>
+        <li><strong>Physical Education:</strong> Loading...</li>
+        <li><strong>Electives:</strong> Loading...</li>
+      </ul>
+
+      <!-- LVN Program -->
+      <h3>LVN Program:</h3>
+      <ul>
+        <li><strong>Interested in LVN Program for Junior Year?</strong> Loading...</li>
+      </ul>
+
+      <!-- Off-Campus Extracurricular -->
+      <h3>Off-Campus Extracurricular:</h3>
+      <ul>
+        <li><strong>Participating?</strong> Loading...</li>
+        <li><strong>Activity Name:</strong> Loading...</li>
+        <li><strong>Coach's Permission:</strong> Loading...</li>
+        <li><strong>Zone/Home Campus:</strong> Loading...</li>
+      </ul>
+    </div>
+
+    <!-- FORM FOR CALLBACK -->
+    <div id="response-container">
+      <label for="phone">Parent Contact Number (required):</label>
+      <input type="tel" id="phone" placeholder="(XXX) XXX-XXXX" required maxlength="14">
+      
+      <label for="comments">Please describe your questions or concerns (required):</label>
+      <textarea id="comments" placeholder="Enter your questions or concerns here"></textarea>
+      
+      <div class="button-container">
+        <button type="button" id="submit-button" onclick="handleSubmit()">
+          Request Callback
+        </button>
+      </div>
+    </div>
+
+    <p class="note">We will contact you at the provided phone number to discuss your inquiry.</p>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <p>&copy; 2025 Harlingen School of Health Professions. For internal use only.</p>
+      <p>
+        If you have any questions or concerns, please contact Mrs. Perez at 
+        <a href="mailto:magdalena.lopez-perez@hcisd.org">magdalena.lopez-perez@hcisd.org</a>.
+      </p>
+      <div id="error-modal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background-color:white; border:1px solid #b71c1c; padding:20px; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.2); z-index:1000;">
+        <p id="error-message" style="color:#b71c1c; font-weight:bold; text-align:center;"></p>
+        <button onclick="closeModal()" style="background-color:#d32f2f; color:white; border:none; padding:10px 20px; border-radius:5px; cursor:pointer;">Close</button>
+      </div>
+      <div id="overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:999;"></div>
+    </div>
+  </div>
+
+  <script>
+    /*
+     * FLOW_ENDPOINT: Logic App for fetching the 10th grade student data
+     * INQUIRY_ENDPOINT: Logic App for submitting parent's inquiry
+     * Adjust these to your actual endpoints
+     */
+    const FLOW_ENDPOINT =
+      "https://prod-51.westus.logic.azure.com:443/workflows/972d756d204149d39f15c368394b6075/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=HYhiocLYasW9SGQpEJa_dxlShKYpViS_A_dhibE9c4Y";
+
+    const INQUIRY_ENDPOINT =
+      "https://prod-113.westus.logic.azure.com:443/workflows/c44d6591680741439c0412250fc8edd3/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=GS6_KY-4ZGDk2EqpUbptxMHlwqUMH83UZjB7l6zq_hk";
+
+    // Query parameters for Student ID, FirstName, LastName
+    const queryParams = new URLSearchParams(window.location.search);
+    const studentID = queryParams.get("StudentID") || "Unknown";
+    const firstName = queryParams.get("FirstName") || "";
+    const lastName = queryParams.get("LastName") || "";
+
+    // 1) Fetch student info on load
+    async function fetchStudentInfo() {
+      try {
+        const response = await fetch(
+          `${FLOW_ENDPOINT}&StudentID=${studentID}&FirstName=${firstName}&LastName=${lastName}`
+        );
+        const data = await response.json();
+
+        if (data) {
+          // If an inquiry is already submitted: ParentResponse = "Rejected"
+          if (data.ParentResponse === "Rejected") {
+            document.getElementById("main-container").innerHTML = `
+              <div class="thank-you">
+                <h1>Inquiry Already Submitted</h1>
+                <p>You have already submitted an inquiry for these 10th grade course requests.</p>
+                <p>We will contact you soon at the phone number provided.</p>
+              </div>
+            `;
+            return;
+          }
+
+          // Update Title
+          document.querySelector("#title").textContent =
+            `Course Request Inquiry for ${data.FirstName || "Student"} ${data.LastName || ""}`;
+
+          // Populate the 10th grade data
+          document.querySelector("#student-info").innerHTML = `
+            <p><strong>Student ID:</strong> ${studentID}</p>
+            <h3>Course Requests:</h3>
+            <ul>
+              <li><strong>English:</strong> ${data.English || "Not Provided"}</li>
+              <li><strong>Mathematics:</strong> ${data.Mathematics || "Not Provided"}</li>
+              <li><strong>Science:</strong> ${data.Science || "Not Provided"}</li>
+              <li><strong>Social Studies:</strong> ${data.SocialStudies || "Not Provided"}</li>
+              <li><strong>Health Science:</strong> ${data.HealthScience || "Not Provided"}</li>
+              <li><strong>Foreign Language:</strong> ${data.ForeignLanguage || "Not Provided"}</li>
+              <li><strong>Fine Arts:</strong> ${data.FineArts || "Not Provided"}</li>
+              <li><strong>Physical Education:</strong> ${data.PhysicalEducation || "Not Provided"}</li>
+              <li><strong>Electives:</strong> ${data.Electives || "Not Provided"}</li>
+            </ul>
+            <h3>LVN Program:</h3>
+            <ul>
+              <li><strong>Interested in LVN Program for Junior Year?</strong> ${data.LVN_x003f_ || "Not Provided"}</li>
+            </ul>
+            <h3>Off-Campus Extracurricular:</h3>
+            <ul>
+              <li><strong>Participating?</strong> ${data.OffCampusExtracurricular || "Not Provided"}</li>
+              <li><strong>Activity Name:</strong> ${data.ExtracurricularName || "Not Provided"}</li>
+              <li><strong>Coach's Permission:</strong> ${data.CoachesPermission || "Not Provided"}</li>
+              <li><strong>Zone/Home Campus:</strong> ${data.ZoneCampus || "Not Provided"}</li>
+            </ul>
+          `;
+        } else {
+          document.getElementById("main-container").innerHTML = `
+            <h1>Error Loading Data</h1>
+            <p>We could not find data for the Student ID provided. Please contact support.</p>
+          `;
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        document.getElementById("main-container").innerHTML = `
+          <h1>Error Loading Data</h1>
+          <p>An error occurred while fetching the data. Please try again later.</p>
+        `;
+      }
+    }
+
+    // 2) Format phone input as user types (optional)
+    document.addEventListener("DOMContentLoaded", () => {
+      const phoneInput = document.getElementById("phone");
+      if (phoneInput) {
+        phoneInput.addEventListener("input", (e) => {
+          let input = e.target.value.replace(/\D/g, "");
+          let formatted = "";
+          if (input.length > 0) {
+            formatted += "(" + input.substring(0, 3);
+          }
+          if (input.length >= 4) {
+            formatted += ") " + input.substring(3, 6);
+          }
+          if (input.length >= 7) {
+            formatted += "-" + input.substring(6, 10);
+          }
+          e.target.value = formatted;
+        });
+      }
+      fetchStudentInfo();
+    });
+
+    // 3) Submit callback request
+    function showError(message) {
+    document.getElementById("error-message").textContent = message;
+    document.getElementById("error-modal").style.display = "block";
+    document.getElementById("overlay").style.display = "block";
+  }
+
+  function closeModal() {
+    document.getElementById("error-modal").style.display = "none";
+    document.getElementById("overlay").style.display = "none";
+  }
+
+  function handleSubmit() {
+    const phone = document.getElementById("phone").value.trim();
+    const comments = document.getElementById("comments").value.trim();
+
+    if (!phone || phone.length !== 14) {
+      showError("Please enter a valid 10-digit phone number.");
+      return;
+    }
+    if (!comments) {
+      showError("Please describe your questions or concerns.");
+      return;
+    }
+
+      const submitButton = document.getElementById("submit-button");
+      submitButton.disabled = true;
+      submitButton.textContent = "Submitting...";
+
+      // Using "Rejected" to indicate an inquiry was submitted, 
+      // same logic as your 8th/9th grade inquiry
+      const payload = {
+        StudentID: studentID,
+        FirstName: firstName,
+        LastName: lastName,
+        ParentPhoneNumber: phone,
+        ParentResponse: "Rejected", 
+        Comments: comments
+      };
+
+      fetch(INQUIRY_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      })
+        .then((response) => {
+          if (response.ok) {
+            document.getElementById("main-container").innerHTML = `
+              <div class="thank-you">
+                <h1>Thank You!</h1>
+                <p>Your inquiry has been successfully submitted for the 10th grade course requests.</p>
+                <p>We will contact you soon at the phone number provided.</p>
+              </div>
+            `;
+          } else {
+            throw new Error("Submission failed.");
+          }
+        })
+        .catch(() => {
+          alert("An error occurred. Please try again.");
+          submitButton.disabled = false;
+          submitButton.textContent = "Request Callback";
+        });
+    }
+  </script>
+</body>
+</html>
