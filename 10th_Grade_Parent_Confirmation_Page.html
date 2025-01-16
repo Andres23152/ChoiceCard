@@ -115,10 +115,40 @@
       margin-top: 15px;
       font-weight: bold;
     }
+    body > .skiptranslate,.goog-logo-link,.gskiptranslate,.goog-te-gadget span,.goog-te-banner-frame,#goog-gt-tt, .goog-te-balloon-frame,div#goog-gt-{
+  display: none!important;
+}
+.goog-te-gadget {
+  color: transparent!important;
+  font-size:0px;
+}
+.goog-text-highlight {
+  background: none !important;
+  box-shadow: none !important;
+}
+#google_translate_element select {
+  background: #0099ae;
+  color: #ffffff;
+  border: 5px solid #000000;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 3px;
+  padding: 8px 12px;
+  font-size: 20px;
+  width: 220px;
+  height: 50px;
+}
+.translate-container {
+  margin-left: 10px; /* Shift only the Google Translate element */
+  align-items: center;
+}
   </style>
 </head>
 <body>
   <div class="container" id="main-container">
+    <div id="translate-wrapper">
+      <div id='google_translate_element'></div>
+  </div><br>
     <!-- HEADER -->
     <div class="header">
       <h1 id="title">Parent Course Request Confirmation for Loading...</h1>
@@ -183,7 +213,7 @@
     <!-- FOOTER -->
     <div class="footer">
       <p>&copy; 2025 Harlingen School of Health Professions. For internal use only.</p>
-      <p>For questions or concerns, please contact Mrs. Perez at <a href="mailto:magdalena.lopez-perez@hcisd.org">magdalena.lopez-perez@hcisd.org</a>.</p>
+      <p>For questions or concerns, please feel free to contact us.</p>
     </div>
   </div>
 
@@ -219,9 +249,7 @@
               <div class="thank-you">
                 <h1>Thank You!</h1>
                 <p>Your course request confirmation has already been submitted.</p>
-                <p>If you have further questions, please contact Mrs. Perez at 
-                  <a href="mailto:magdalena.lopez-perez@hcisd.org">magdalena.lopez-perez@hcisd.org</a>.
-                </p>
+                <p>If you have further questions, please feel free to contact us.</p>
               </div>
             `;
             return;
@@ -304,9 +332,7 @@
               <div class="thank-you">
                 <h1>Thank You!</h1>
                 <p>Your course request confirmation has been successfully submitted.</p>
-                <p>If you have further questions, please contact Mrs. Perez at 
-                  <a href="mailto:magdalena.lopez-perez@hcisd.org">magdalena.lopez-perez@hcisd.org</a>.
-                </p>
+                <p>If you have further questions, please feel free to contact us.</p>
               </div>
             `;
           } else {
@@ -323,5 +349,16 @@
     // On page load
     document.addEventListener("DOMContentLoaded", fetchStudentInfo);
   </script>
+     <script>
+      function googleTranslateElementInit() {
+          new google.translate.TranslateElement({
+              pageLanguage: 'en',
+              autoDisplay: 'true',
+              includedLanguages:'es,en',
+              layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+          }, 'google_translate_element');
+      }
+     </script>
+     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>

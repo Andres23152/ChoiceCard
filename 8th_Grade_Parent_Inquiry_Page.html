@@ -110,10 +110,40 @@
       font-style: italic;
       text-align: center;
     }
+    body > .skiptranslate,.goog-logo-link,.gskiptranslate,.goog-te-gadget span,.goog-te-banner-frame,#goog-gt-tt, .goog-te-balloon-frame,div#goog-gt-{
+  display: none!important;
+}
+.goog-te-gadget {
+  color: transparent!important;
+  font-size:0px;
+}
+.goog-text-highlight {
+  background: none !important;
+  box-shadow: none !important;
+}
+#google_translate_element select {
+  background: #0099ae;
+  color: #ffffff;
+  border: 5px solid #000000;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 3px;
+  padding: 8px 12px;
+  font-size: 20px;
+  width: 220px;
+  height: 50px;
+}
+.translate-container {
+  margin-left: 10px; /* Shift only the Google Translate element */
+  align-items: center;
+}
   </style>
 </head>
 <body>
   <div class="container" id="main-container">
+    <div id="translate-wrapper">
+      <div id='google_translate_element'></div>
+  </div><br>
     <div class="header">
       <h1 id="title">Course Request Inquiry for Loading...</h1>
       <img src="https://hshpnews.wordpress.com/wp-content/uploads/2015/11/logo-hshp.png?w=410&h=310" alt="HSHP Logo" class="logo">
@@ -125,10 +155,10 @@
       <p><strong>Student ID:</strong> Loading...</p>
       <h3>Course Requests:</h3>
       <ul>
-        <li><strong>Reading PAP:</strong> Loading...</li>
+        <li><strong>PAP Reading:</strong> Loading...</li>
         <li><strong>Mathematics:</strong> Loading...</li>
         <li><strong>Science:</strong> Loading...</li>
-        <li><strong>Social Studies PAP:</strong> Loading...</li>
+        <li><strong>PAP Social Studies:</strong> Loading...</li>
         <li><strong>Foreign Language:</strong> Loading...</li>
         <li><strong>Health Science:</strong> Loading...</li>
         <li><strong>Electives:</strong> Loading...</li>
@@ -151,7 +181,7 @@
 
     <div class="footer">
       <p>&copy; 2025 Harlingen School of Health Professions. For internal use only.</p>
-      <p>If you have any questions or concerns, please contact Mrs. Perez at <a href="mailto:magdalena.lopez-perez@hcisd.org">magdalena.lopez-perez@hcisd.org</a>.</p>
+      <p>If you have any questions or concerns, please feel free to contact us.</p>
     </div>
     <div id="error-modal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background-color:white; border:1px solid #b71c1c; padding:20px; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.2); z-index:1000;">
       <p id="error-message" style="color:#b71c1c; font-weight:bold; text-align:center;"></p>
@@ -192,10 +222,10 @@
             <p><strong>Student ID:</strong> ${studentID}</p>
             <h3>Course Requests:</h3>
             <ul>
-              <li><strong>Reading PAP:</strong> All students will be enrolled in Reading PAP</li>
+              <li><strong>PAP Reading:</strong> All students will be enrolled in PAP Reading</li>
               <li><strong>Mathematics:</strong> ${data.Mathematics || "Not Provided"}</li>
               <li><strong>Science:</strong> ${data.Science || "Not Provided"}</li>
-              <li><strong>Social Studies PAP:</strong> All students will be enrolled in Social Studies PAP</li>
+              <li><strong>PAP Social Studies:</strong> All students will be enrolled in PAP Social Studies</li>
               <li><strong>Foreign Language:</strong> ${data.ForeignLanguage || "Not Provided"}</li>
               <li><strong>Health Science:</strong> ${data.HealthScience || "Not Provided"}</li>
               <li><strong>Electives:</strong> ${data.Electives || "Not Provided"}</li>
@@ -295,6 +325,17 @@
 
     document.addEventListener("DOMContentLoaded", fetchStudentInfo);
   </script>
+     <script>
+      function googleTranslateElementInit() {
+          new google.translate.TranslateElement({
+              pageLanguage: 'en',
+              autoDisplay: 'true',
+              includedLanguages:'es,en',
+              layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+          }, 'google_translate_element');
+      }
+     </script>
+     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
 
