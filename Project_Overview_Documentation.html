@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HSHP Course Selection System – Finalized Documentation</title>
+  <style>
+    /**********************************************
+     *               GENERAL RESET
+     **********************************************/
+    *, *::before, *::after {
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box;
+    }
+
+    /**********************************************
+     *          BASE FONTS & BACKGROUND
+     **********************************************/
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(120deg, #f0f4f8 0%, #ffffff 100%);
+      color: #333;
+      line-height: 1.6;
+
+      /* Fade-in animation for entire body on load */
+      opacity: 0;
+      animation: fadeInBody 1.5s ease forwards;
+    }
+    img, video {
+      max-width: 100%;
+      height: auto;
+    }
+    a {
+      color: #0076ba;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    a:hover {
+      text-decoration: underline;
+      color: #005488;
+    }
+
+    /**********************************************
+     *               CONTAINER
+     **********************************************/
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+      /* Slide-up animation for container */
+      animation: fadeInUp 1.2s ease forwards;
+      opacity: 0; /* Start hidden, shown by fadeInUp */
+    }
+
+    /**********************************************
+     *            HEADER & TITLE
+     **********************************************/
+    header {
+      text-align: center;
+      padding: 2rem;
+      border-bottom: 1px solid #ccc;
+    }
+    header h1 {
+      font-size: 2rem;
+      color: #0d4f8b;
+      margin-bottom: 0.3rem;
+      letter-spacing: 1px;
+      position: relative;
+      display: inline-block;
+      animation: popIn 1.2s ease;
+    }
+    header p {
+      font-size: 1.1rem;
+      color: #444;
+    }
+
+    /**********************************************
+     *           TABLE OF CONTENTS
+     **********************************************/
+    nav#toc {
+      background: #f0f4f8;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+
+      /* Subtle fade/scale on hover to draw attention */
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    nav#toc:hover {
+      transform: scale(1.01);
+      box-shadow: 0 4px 12px rgba(0, 118, 186, 0.15);
+    }
+    nav#toc h2 {
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+      color: #0076ba;
+      animation: popIn 1.2s ease;
+    }
+    nav#toc ol {
+      margin-left: 1.5rem;
+      list-style-type: decimal;
+    }
+    nav#toc li {
+      margin-bottom: 0.5rem;
+      animation: fadeInLeft 0.8s ease;
+    }
+    nav#toc a {
+      font-weight: 500;
+      display: inline-block;
+      position: relative;
+    }
+    nav#toc a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 0;
+      height: 2px;
+      background: #0d4f8b;
+      transition: width 0.3s ease;
+    }
+    nav#toc a:hover::after {
+      width: 100%;
+    }
+
+    /**********************************************
+     *               SECTIONS
+     **********************************************/
+    section {
+      margin-bottom: 2rem;
+      padding: 1.5rem 1.5rem 2rem;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInSection 1s ease forwards;
+      animation-delay: 0.5s; /* Stagger after container loads */
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    section.pop-words:hover {
+      background-color: #f8ffff; /* Subtle bluish background */
+      transform: translateY(-3px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    /* Heading with left-right highlight effect */
+    section h2 {
+      color: #0d4f8b;
+      margin-bottom: 0.75rem;
+      font-size: 1.5rem;
+      border-bottom: 2px solid #0d4f8b;
+      padding-bottom: 0.3rem;
+      position: relative;
+      display: inline-block;
+      overflow: hidden;
+      transition: color 0.4s ease;
+      border-radius: 6px; /* Slightly rounded edges for the highlight */
+    }
+    section h2::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 0;
+      background: #0d4f8b;
+      z-index: -1;
+      transition: width 0.4s ease, border-radius 0.4s ease;
+      border-radius: 6px;
+    }
+    section h2:hover::before {
+      width: 100%;
+    }
+    section h2:hover {
+      color: #fff;
+    }
+
+    section h3 {
+      margin-top: 1.5rem;
+      color: #333;
+      font-size: 1.2rem;
+      border-left: 4px solid #0d4f8b;
+      padding-left: 0.5rem;
+      margin-bottom: 0.6rem;
+    }
+    section h4 {
+      margin-top: 1rem;
+      color: #444;
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    /**********************************************
+     *            TEXT ELEMENTS
+     **********************************************/
+    p {
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+    ul {
+      margin-bottom: 1rem;
+      margin-left: 1.5rem;
+      list-style-type: disc;
+    }
+    ol {
+      margin-bottom: 1rem;
+      margin-left: 1.5rem;
+    }
+    li {
+      margin-bottom: 0.5rem;
+    }
+    code {
+      background: #eee;
+      padding: 0.2rem 0.4rem;
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.95rem;
+      border-radius: 4px;
+    }
+    hr {
+      margin: 2rem 0;
+      border: none;
+      border-top: 1px dashed #ccc;
+    }
+    .highlight {
+      background: #ffffcc;
+      padding: 0.3rem 0.5rem;
+      border-radius: 3px;
+    }
+
+    /**********************************************
+     *               FOOTER
+     **********************************************/
+    footer {
+      text-align: center;
+      padding: 1rem;
+      border-top: 1px solid #ccc;
+      color: #777;
+      font-size: 0.9rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s ease forwards;
+      animation-delay: 1s; /* Show after sections appear */
+    }
+
+    /**********************************************
+     *            IMAGE SHOWCASE CLASS
+     **********************************************/
+    .image-showcase {
+      display: block;
+      margin: 2rem auto;
+      max-width: 80%;
+      border: 3px solid #0d4f8b;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(13,79,139,0.2);
+      
+      /* Hover scale + box-shadow */
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .image-showcase:hover {
+      transform: scale(1.02);
+      box-shadow: 0 6px 16px rgba(13,79,139,0.3);
+    }
+
+    /**********************************************
+     *        WORD-BY-WORD HOVER EFFECT
+     **********************************************/
+    .word {
+      display: inline-block;
+      position: relative;
+      transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
+      cursor: pointer;
+      border-radius: 4px; /* Slightly round the corner of each word’s highlight */
+    }
+    .word:hover {
+      background-color: #e7f5ff;  /* Light bluish highlight matching scheme */
+      transform: scale(1.15);    /* No rotation, just pop in */
+      z-index: 5;
+      color: #0076ba;           /* Darker text color on hover to stand out */
+    }
+
+    /**********************************************
+     *           SCROLL ANIMATION STYLES
+     **********************************************/
+    /* Keyframes for elements flying in from the left */
+    @keyframes flyInLeft {
+      0% {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Keyframes for elements flying in from the right */
+    @keyframes flyInRight {
+      0% {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Keyframes for elements fading in */
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    /* Animation classes */
+    .animate-fly-in-left {
+      opacity: 0;
+      transform: translateX(-50px);
+      animation: flyInLeft 1s forwards;
+    }
+
+    .animate-fly-in-right {
+      opacity: 0;
+      transform: translateX(50px);
+      animation: flyInRight 1s forwards;
+    }
+
+    .animate-fade-in {
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+    }
+
+    /* Optional: Staggered animations for better visual appeal */
+    .animate-fly-in-left.delay-1 {
+      animation-delay: 0.2s;
+    }
+
+    .animate-fly-in-left.delay-2 {
+      animation-delay: 0.4s;
+    }
+
+    .animate-fly-in-right.delay-1 {
+      animation-delay: 0.2s;
+    }
+
+    .animate-fly-in-right.delay-2 {
+      animation-delay: 0.4s;
+    }
+
+    /**********************************************
+     *               ANIMATIONS
+     **********************************************/
+    @keyframes fadeInBody {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes fadeInSection {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes fadeInLeft {
+      0% {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    @keyframes popIn {
+      0% {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    /**********************************************
+     *               RESPONSIVE
+     **********************************************/
+    @media (max-width: 768px) {
+      nav#toc h2 {
+        font-size: 1.1rem;
+      }
+      nav#toc ol {
+        margin-left: 1rem;
+      }
+      section {
+        padding: 1rem;
+      }
+      header h1 {
+        font-size: 1.6rem;
+      }
+    }
+
+    /**********************************************
+     *         ACCESSIBILITY FEATURES
+     **********************************************/
+    @media (prefers-reduced-motion: reduce) {
+      body, .container, header, nav#toc, section, footer {
+        animation: none !important;
+        transition: none !important;
+      }
+      .word:hover {
+        transform: none;
+        background-color: inherit;
+        color: inherit;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>HSHP Course Selection System</h1>
+      <p>Comprehensive &amp; Finalized Documentation</p>
+    </header>
+
+    <!-- TABLE OF CONTENTS -->
+    <nav id="toc">
+      <h2>Table of Contents</h2>
+      <ol>
+        <li><a href="#reflection">Backstory &amp; Personal Reflection</a></li>
+        <li><a href="#overview">Project Overview</a></li>
+        <li><a href="#purpose">Project Purpose &amp; Key Features</a></li>
+        <li><a href="#audience">Audience</a></li>
+        <li><a href="#goals-scope">Goals &amp; Scope</a></li>
+        <li><a href="#form-structure">Microsoft Form Structure</a></li>
+        <li><a href="#flows-logic">System Flows &amp; Logic</a></li>
+        <li><a href="#flow-details">Detailed Flow Explanations</a></li>
+        <li><a href="#parent-multilang">Parent Involvement &amp; Multi-Language Support</a></li>
+        <li><a href="#templates">HTML/CSS/JS Template Details</a></li>
+        <li><a href="#architecture">Installation &amp; Architecture</a></li>
+        <li><a href="#usage-examples">Usage &amp; Examples</a></li>
+        <li><a href="#troubleshooting">Troubleshooting &amp; FAQ</a></li>
+        <li><a href="#visuals-style">Visuals &amp; Style Guidelines</a></li>
+        <li><a href="#challenges">Challenges &amp; Future Considerations</a></li>
+        <li><a href="#doc-strategy">Documentation Strategy &amp; Suggested Prompts</a></li>
+        <li><a href="#conclusion">Conclusion &amp; Next Steps</a></li>
+      </ol>
+<p> Please note, the format of this document is a little off. For example, some words are bolded and not properly spaced. I'm working on it to make it look better.</p>
+    </nav>
+
+    <!-- 1. REFLECTION -->
+    <section id="reflection" class="pop-words" data-animation="fade-in">
+      <h2 data-animation="fly-in-left">Backstory &amp; Personal Reflection</h2>
+
+      <p data-animation="fly-in-left">
+        Although this is my first year teaching, my administration team has been incredibly supportive, 
+        allowing me to propose and implement various solutions (like the Phoenix Time dashboard). 
+        Feeling heard and trusted as a new teacher is amazing, and it pushed me to tackle Maggie’s request 
+        enthusiastically.
+      </p>
+      <p data-animation="fly-in-right">
+        The deeper I went, the more I realized how complicated the project was: we have grades 8 through 12, 
+        each with different course offerings, extracurriculars, and advanced classes (AP, dual enrollment, etc.). 
+        Combine ~400 students’ unique needs, and you get a massive branching puzzle. I also wanted to keep parents 
+        involved, so I added a two-factor confirmation system, with bilingual support in the emails and webpages.
+      </p>
+      <p data-animation="fly-in-left">
+        I decided to stick with Microsoft 365 (Forms, Power Automate, SharePoint) because my admin team is 
+        comfortable with it. This did lead to a labyrinth of flows, conditions, switch cases, and multiple 
+        grade-specific HTML templates. In hindsight, a single centralized website might have been simpler 
+        for me as a developer, but using 365 ensured my administration would be comfortable with it. 
+      </p>
+      <p data-animation="fly-in-right">
+        The project taught me a ton, from advanced branching to real-time data fetches to bilingual UI. 
+        My admin team—Tina, Chris, Maggie, Stephanie, and others—helped me refine everything through their feedback 
+        and extensive knowledge of real-world scenarios. It’s been a brilliant experience in problem-solving, 
+        collaboration, and leveraging technology to streamline complex workflows.
+      </p>
+    </section>
+
+    <!-- 2. OVERVIEW -->
+    <section id="overview" class="pop-words" data-animation="fade-in">
+      <h2 data-animation="fly-in-left">Project Overview</h2>
+      <p data-animation="fly-in-right">The <strong>HSHP Course Selection System</strong> is a dynamic workflow that integrates 
+        <em>Microsoft Forms, Power Automate, SharePoint, and GitHub</em>. Its primary function is to:
+      </p>
+      <ul>
+        <li data-animation="fly-in-left">Enable students to select courses in a user-friendly form (branching by grade level).</li>
+        <li data-animation="fly-in-right">Generate individualized PDFs with each student’s choices.</li>
+        <li data-animation="fly-in-left">Send automated emails to both students and parents, enabling them to confirm or request changes.</li>
+        <li data-animation="fly-in-right">Maintain all data in a centralized SharePoint list for record-keeping and reporting.</li>
+        <li data-animation="fly-in-left">Provide bilingual (English/Spanish) support throughout all communications.</li>
+      </ul>
+      <p data-animation="fly-in-right">
+        This ensures transparency, reduces administrative overhead, and captures valuable data for 
+        each student’s upcoming schedule.
+      </p>
+    </section>
+
+    <!-- 3. PURPOSE & KEY FEATURES -->
+    <section id="purpose" class="pop-words" data-animation="fade-in">
+      <h2 data-animation="fly-in-left">Project Purpose &amp; Key Features</h2>
+      
+      <h3 data-animation="fly-in-right">Purpose</h3>
+      <p data-animation="fly-in-left">
+        The system was inspired by the need to replace manual, error-prone processes for course selection. 
+        By introducing a streamlined, automated approach, we eliminate bottlenecks, reduce mistakes, 
+        and improve user satisfaction for students, parents, and counselors.
+      </p>
+
+      <h3 data-animation="fly-in-right">Key Features</h3>
+      <ul>
+        <li data-animation="fly-in-left"><strong>Multi-Grade Templates:</strong> Separate HTML/CSS/JS for 8th–12th grade, each with distinct options.</li>
+        <li data-animation="fly-in-right"><strong>Email Confirmation &amp; Inquiry Forms:</strong> Students and parents receive automated emails 
+            with links to confirm or inquire.</li>
+        <li data-animation="fly-in-left"><strong>Choice Cards:</strong> Specialized templates for initial requests, confirmed requests, 
+            rejections, and inquiries.</li>
+        <li data-animation="fly-in-right"><strong>Google Translate Integration:</strong> Real-time multilingual support (English/Spanish) 
+            for parents.</li>
+        <li data-animation="fly-in-left"><strong>API Usage for Dynamic Data:</strong> GET/POST calls to Power Automate endpoints, 
+            storing data in SharePoint.</li>
+        <li data-animation="fly-in-right"><strong>Responsive Design &amp; Performance:</strong> Ensures the forms/pages load quickly 
+            and are user-friendly across devices.</li>
+      </ul>
+    </section>
+
+    <!-- 4. AUDIENCE -->
+    <section id="audience" class="pop-words" data-animation="fade-in">
+      <h2 data-animation="fly-in-left">Audience</h2>
+      <ul>
+        <li data-animation="fly-in-right"><strong>Developers (Me):</strong> Responsible for maintaining and extending the codebase, 
+            including integrating new APIs or modifying email workflows.</li>
+        <li data-animation="fly-in-left"><strong>Administrators &amp; Educators (Also me):</strong> Use the templates and flows to 
+            manage student/parent communications and approvals.</li>
+        <li data-animation="fly-in-right"><strong>Students &amp; Parents:</strong> Primary users who submit choices 
+            and confirm course selections through the system.</li>
+      </ul>
+      <p data-animation="fly-in-left">
+        While some technical know-how is helpful (especially for developers), 
+        the system’s front-end is designed for non-technical stakeholders to interact easily.
+      </p>
+    </section>
+
+    <!-- 5. GOALS & SCOPE -->
+    <section id="goals-scope" class="pop-words" data-animation="fade-in">
+      <h2 data-animation="fly-in-left">Goals &amp; Scope</h2>
+      
+      <h3 data-animation="fly-in-right">Project Goals</h3>
+      <ul>
+        <li data-animation="fly-in-left">Streamline the course request and confirmation processes.</li>
+        <li data-animation="fly-in-right">Automate email workflows with confirmation/rejection/inquiry.</li>
+        <li data-animation="fly-in-left">Provide a simple, accessible interface for students and parents.</li>
+        <li data-animation="fly-in-right">Incorporate multilingual (English/Spanish) functionality for wider reach.</li>
+        <li data-animation="fly-in-left">Maintain robust data tracking for all submissions and updates.</li>
+        <li data-animation="fly-in-right">Design for future scalability and customization (additional grades, new features).</li>
+      </ul>
+
+      <h3 data-animation="fly-in-left">Scope</h3>
+      <p data-animation="fly-in-right"><strong>Included Features:</strong></p>
+      <ul>
+        <li data-animation="fly-in-left">An HTML/CSS/JS codebase with reusable templates for different grades and steps.</li>
+        <li data-animation="fly-in-right">API integration for dynamic data handling (SharePoint + Power Automate flows).</li>
+        <li data-animation="fly-in-left">Responsive design considerations and performance optimization.</li>
+        <li data-animation="fly-in-right">Automated emails for confirmations, rejections, and follow-ups in English and Spanish.</li>
+      </ul>
+      <p data-animation="fly-in-left"><strong>Excluded Features (Current Version):</strong></p>
+      <ul>
+        <li data-animation="fly-in-right">Backend server setup outside of Microsoft 365 (e.g., custom server frameworks).</li>
+        <li data-animation="fly-in-left">Advanced multilingual support beyond Spanish.</li>
+      </ul>
+      <p data-animation="fly-in-right">
+        Potential expansions include deeper backend integrations, real-time analytics dashboards, 
+        and broader language support.
+      </p>
+    </section>
+
+    <!-- 6. FORM STRUCTURE -->
+    <section id="form-structure" class="pop-words" data-animation="fade-in">
+      <h2 data-animation="fly-in-left">Microsoft Form Structure</h2>
+      <p data-animation="fly-in-right">
+        A single Microsoft Form with ~50 questions (including branching) captures student data. 
+        The first section asks for:
+      </p>
+      <ul>
+        <li data-animation="fly-in-left">ID or “NTD” if new to district</li>
+        <li data-animation="fly-in-right">Student First/Last Name &amp; Email</li>
+        <li data-animation="fly-in-left">Parent Email</li>
+        <li data-animation="fly-in-right">Incoming Grade Level (8th–12th)</li>
+      </ul>
+      <p data-animation="fly-in-left">
+        Based on grade selection, branching logic presents the relevant subjects and extracurriculars. 
+        Here’s an overview:
+      </p>
+      <h3 data-animation="fly-in-right">8th Grade</h3>
+      <ul>
+        <li data-animation="fly-in-left">PAP Reading, PAP Social Studies, various math and science options, Health Science, 
+            Foreign Language, limited electives.</li>
+        <li data-animation="fly-in-right">No off-campus extracurricular is offered at this level.</li>
+      </ul>
+      <h3 data-animation="fly-in-left">9th Grade</h3>
+      <ul>
+        <li data-animation="fly-in-right">English, Math (Algebra 1, Geometry, Algebra 2), Science (Biology, Chemistry), 
+            Health Science, Foreign Language, Fine Arts, PE, multiple electives.</li>
+        <li data-animation="fly-in-left">Off-campus extracurricular question + details if “yes.”</li>
+      </ul>
+      <h3 data-animation="fly-in-right">10th Grade</h3>
+      <ul>
+        <li data-animation="fly-in-left">English, Math, Science, Social Studies, Health Science, Foreign Language, Fine Arts, PE, 
+            Electives, LVN Program interest for junior year, off-campus extracurricular.</li>
+      </ul>
+      <h3 data-animation="fly-in-right">11th Grade</h3>
+      <ul>
+        <li data-animation="fly-in-left">English, Math, Science, Social Studies, Practicum, Electives, off-campus extracurricular.</li>
+      </ul>
+      <h3 data-animation="fly-in-right">12th Grade</h3>
+      <ul>
+        <li data-animation="fly-in-left">English, Social Studies, Practicum, Electives, off-campus extracurricular.</li>
+      </ul>
+      <p data-animation="fly-in-right">
+        The final section captures additional questions or comments for the counselor. 
+        Once the student submits, a Power Automate flow is triggered, branching further 
+        based on grade level.
+      </p>
+    </section>
+
+    <!-- 7. SYSTEM FLOWS & LOGIC -->
+    <section id="flows-logic" class="pop-words" data-animation="fade-in">
+      <h2 data-animation="fly-in-left">System Flows &amp; Logic</h2>
+      <p data-animation="fly-in-right">
+        Power Automate underpins the entire system, connecting, Microsoft OneDrive, Microsoft Forms 
+        with SharePoint, Outlook, and GitHub-hosted pages. When a student submits the form, 
+        the Grade Approval Creation Flow runs:
+      </p>
+      <ol>
+        <li data-animation="fly-in-left">Captures response details from the form.</li>
+        <li data-animation="fly-in-right">Uses a Switch Case for each grade (8th–12th).</li>
+        <li data-animation="fly-in-left">Determines if the student is new or existing, then updates/creates a SharePoint entry.</li>
+        <li data-animation="fly-in-right">Generates an HTML template (grade-specific), converts to PDF, stores in OneDrive, 
+            and sends the student an email with a link to confirm choices.</li>
+      </ol>
+      <p data-animation="fly-in-left">
+        The student’s confirmation link triggers another flow, 
+        <em>Student Confirmation Flow</em>, which:
+      </p>
+      <ul>
+        <li data-animation="fly-in-right">Updates the SharePoint item from “not responded” to “confirmed.”</li>
+        <li data-animation="fly-in-left">Creates a PDF for the newly confirmed status.</li>
+        <li data-animation="fly-in-right">Sends a parent-facing email with bilingual options to confirm or request changes.</li>
+      </ul>
+      <p data-animation="fly-in-left">
+        If the parent confirms, the <em>Parent Confirmation Flow</em> marks the item “Parent Confirmed.” 
+        If they request changes, the <em>Parent Rejection Flow</em> logs an “Inquiry” status, 
+        prompting a counselor follow-up. 
+      </p>
+      <p data-animation="fly-in-right">
+        A separate <em>GET Request Flow</em> returns student/parent data to static GitHub pages, 
+        ensuring real-time dynamic content. 
+      </p>
+    </section>
+
+    <!-- 8. DETAILED FLOW EXPLANATIONS -->
+    <section id="flow-details" class="pop-words" data-animation="fade-in">
+      <h2 data-animation="fly-in-left">Detailed Flow Explanations</h2>
+      <h3 data-animation="fly-in-right">Grade Approval Creation Flow</h3>
+      <ul>
+        <li data-animation="fly-in-left"><strong>Trigger:</strong> Microsoft Form submission.</li>
+        <li data-animation="fly-in-right"><strong>Logic:</strong> Switch case on the grade, nested if statements for new vs. existing, 
+            create or update SharePoint record, generate HTML -> PDF, store in OneDrive, send email to student.</li>
+      </ul>
+      <img src="https://raw.githubusercontent.com/Andres23152/ChoiceCard/refs/heads/main/8-12th%20Grade%20Creation%20Flow.png" 
+     alt="8-12th Grade Creation Flow Diagram" 
+     class="image-showcase">
+
+      <h3 data-animation="fly-in-left">Student Confirmation Flow</h3>
+      <ul>
+        <li data-animation="fly-in-right"><strong>Trigger:</strong> HTTP POST from student’s “Confirm” link.</li>
+        <li data-animation="fly-in-left"><strong>Actions:</strong> Mark SharePoint “Confirmed,” create a second PDF, 
+            email parent with 4 possible buttons (View course, confirm, request changes, view course bulletin).</li>
+      </ul>
+      <img src="https://raw.githubusercontent.com/Andres23152/ChoiceCard/refs/heads/main/Student%20Approval%20Flow.png" 
+      alt="Student Approval Flow Diagram" 
+      class="image-showcase">
+ 
+      <h3 data-animation="fly-in-right">Parent Confirmation Flow</h3>
+      <ul>
+        <li data-animation="fly-in-left"><strong>Trigger:</strong> Parent clicks “Confirm” in their email, hitting a different HTTP endpoint.</li>
+        <li data-animation="fly-in-right"><strong>Actions:</strong> Updates SharePoint to “Parent Confirmed,” generates final PDF, 
+            sends email to both parent and student, optional counselor CC.</li>
+      </ul>
+      <img src="https://raw.githubusercontent.com/Andres23152/ChoiceCard/refs/heads/main/Parent%20Approval%20Flow.png" 
+      alt="Parent Approval Flow Diagram" 
+      class="image-showcase">
+ 
+      <h3 data-animation="fly-in-left">Parent Rejection/Inquiry Flow</h3>
+      <ul>
+        <li data-animation="fly-in-right"><strong>Trigger:</strong> Parent clicks “Request an Inquiry” or “Reject,” calling a separate endpoint.</li>
+        <li data-animation="fly-in-left"><strong>Actions:</strong> Logs “Parent Rejected” or “Inquiry” in SharePoint, 
+            captures phone number and comments, notifies counselor by email.</li>
+      </ul>
+      <img src="https://raw.githubusercontent.com/Andres23152/ChoiceCard/refs/heads/main/Parent%20Rejection%20Flow.png" 
+      alt="Parent Rejection Flow Diagram" 
+      class="image-showcase">
+ 
+      <h3 data-animation="fly-in-right">GET Request Flow</h3>
+      <ul>
+        <li data-animation="fly-in-left"><strong>Trigger:</strong> GitHub page calls a URL with <code>?studentID=xxx&FirstName=xxx&LastName=xxx</code> or other params.</li>
+        <li data-animation="fly-in-right"><strong>Actions:</strong> Fetch matching record from SharePoint, return JSON with course selections, 
+            status, etc. so the static page can populate data in real-time.</li>
+      </ul>
+
+      <img src="https://raw.githubusercontent.com/Andres23152/ChoiceCard/refs/heads/main/GET%20Request%20Flow.png" 
+     alt="GET Request Flow Diagram" 
+     class="image-showcase">
+
+    </section>
+
+    <!-- SECTION 9: PARENT INVOLVEMENT & MULTI-LANGUAGE SUPPORT -->
+    <section id="parent-involvement" class="pop-words" data-animation="fade-in">
+      <h2 data-animation="fly-in-left">Parent Involvement & Multi-Language Support</h2>
+      <p data-animation="fly-in-right">
+        One of the most significant features is the involvement of parents at a crucial stage of the process. 
+        Immediately after the student confirms their choices, a custom email is generated for the parent with 
+        bilingual prompts, ensuring that families who speak Spanish can fully participate.
+      </p>
+      <p data-animation="fly-in-left">
+        Each parent email includes:
+      </p>
+      <ul>
+        <li data-animation="fly-in-right"><strong>Summary</strong> of their child’s course selections.</li>
+        <li data-animation="fly-in-left"><strong>Links to confirm or reject/inquire, along with <strong>bilingual instructions</strong>.</li>
+        <li data-animation="fly-in-right"><strong>Buttons to view a <strong>dynamically generated PDF</strong> or to read a <strong>course bulletin</strong> 
+        (giving an overview of the classes offered).</li>
+      </ul>
+      <p data-animation="fly-in-left">
+        On the hosted GitHub confirmation pages, I integrated a <em>custom translation dropdown</em> that toggles 
+        between English and Spanish. The dynamic placeholders (student’s name, course list, etc.) are also 
+        translated in real-time, giving parents a consistent bilingual experience.
+      </p>
+    </section>
+
+    <!-- 10. TEMPLATES -->
+    <section id="templates" class="pop-words" data-animation="fade-in">
+      <h2 data-animation="fly-in-left">HTML/CSS/JS Template Details</h2>
+      <p data-animation="fly-in-right">
+        Because every grade (8th–12th) and each step (initial, student confirm, parent confirm, parent inquiry) 
+        has unique requirements, there are many templates:
+      </p>
+      <ul>
+        <li data-animation="fly-in-left"><em>Emails:</em> ~25 HTML files for grade-specific and step-specific communications.</li>
+        <img src="https://raw.githubusercontent.com/Andres23152/ChoiceCard/refs/heads/main/Emails.png" 
+     alt="Emails Flow Diagram" 
+     class="image-showcase">
+
+        <li data-animation="fly-in-right"><em>Static Pages (GitHub):</em> ~15 total, each pulling data via the GET Request Flow.</li>
+        <img src="https://raw.githubusercontent.com/Andres23152/ChoiceCard/refs/heads/main/Pages.png" 
+        alt="Pages Flow Diagram" 
+        class="image-showcase">
+   
+        <li data-animation="fly-in-left"><em>Choice Card Templates:</em> ~20 different HTML/CSS combos used within Power Automate 
+            to generate PDFs at each step.</li>
+            <img src="https://raw.githubusercontent.com/Andres23152/ChoiceCard/refs/heads/main/Templates.png" 
+     alt="Templates Flow Diagram" 
+     class="image-showcase">
+
+      </ul>
+      <p data-animation="fly-in-right">
+        In total, there are over 60 HTML files. Each file typically includes:
+      </p>
+      <ul>
+        <li data-animation="fly-in-left">Inline CSS/JS: For quick modifications directly in Power Automate (no external references needed).</li>
+        <li data-animation="fly-in-right">Branding &amp; Logos: Sourced from OneDrive or embedded as base64 images.</li>
+        <li data-animation="fly-in-left">Translation Elements: A custom dropdown or embedded Google Translate script for language switching.</li>
+      </ul>
+      <p data-animation="fly-in-right">
+        Though large in number, these templates follow consistent naming conventions (e.g., 
+        <code>8th_Grade_Parent_Confirm.html</code>, 
+        <code>10th_Grade_Student_Inquiry.html</code>), making them easier to manage.
+        Here was an overview of the code (Used VS Code):
+        <img src="https://raw.githubusercontent.com/Andres23152/ChoiceCard/main/Oveview%20of%20code.png" 
+     alt="Overview of Code Diagram" 
+     class="image-showcase">
+
+      </p>
+    </section>
+
+    <!-- 11. INSTALLATION & ARCHITECTURE -->
+    <section id="architecture" class="pop-words" data-animation="fade-in">
+      <h2 data-animation="fly-in-left">Installation &amp; Architecture</h2>
+
+      <h3 data-animation="fly-in-right">Prerequisites</h3>
+      <ul>
+        <li data-animation="fly-in-left">A modern web browser (Chrome, Firefox, Edge) with JavaScript enabled.</li>
+        <li data-animation="fly-in-right">(Optional) A local server setup—Node.js or a Python HTTP server for advanced local testing.</li>
+        <li data-animation="fly-in-left">Basic knowledge of HTML, CSS, and JavaScript, especially if you plan to edit the templates.</li>
+        <li data-animation="fly-in-right">Microsoft 365 environment (Forms, Power Automate, SharePoint) if replicating the exact flows.</li>
+      </ul>
+
+      <h3 data-animation="fly-in-left">Project Structure</h3>
+      <p data-animation="fly-in-right">
+        A typical repository might look like this:
+      </p>
+      <pre><code data-animation="fly-in-left">
+/choice-card-templates<br>
+├─ /emails<br>
+│   ├─ 8th_Grade_Parent_Email.html<br>
+│   ├─ 9th_Grade_Parent_Email.html<br>
+│   └─ ...<br>
+├─ /pages<br>
+│   ├─ Parent_Confirmation_Pages/<br>
+│   ├─ Parent_Inquiry_Pages/<br>
+│   └─ Student_Confirmation_Pages/<br>
+├─ /templates<br>
+│   ├─ choice_cards_initial/<br>
+│   ├─ parent_confirmed_choice_cards/<br>
+│   └─ ...<br>
+├─ /css<br>
+├─ /js<br>
+└─ index.html
+      </code></pre>
+
+      <h3 data-animation="fly-in-right">Setup Instructions</h3>
+      <ol>
+        <li data-animation="fly-in-left"><strong>Clone or Download:</strong> 
+          <code>git clone https://github.com/username/choice-card-templates.git</code></li>
+        <li data-animation="fly-in-right"><strong>(Optional) Local Server:</strong> 
+          Use <code>npm install -g http-server</code> or a VS Code “Live Server” extension to test pages locally.</li>
+        <li data-animation="fly-in-left"><strong>Link APIs:</strong> 
+          In the <code>.js</code> files, configure your Power Automate/SharePoint endpoints for dynamic data.</li>
+      </ol>
+
+      <h3 data-animation="fly-in-right">Integration Points</h3>
+      <ul>
+        <li data-animation="fly-in-left"><strong>Google Translate API:</strong> 
+            For bilingual support, typically inlined via 
+            <code>&lt;script src="//translate.google.com/translate_a/element.js?cb=init" &gt;&lt;/script&gt;</code></li>
+        <li data-animation="fly-in-right"><strong>Azure Logic Apps or Power Automate:</strong> 
+            Endpoints for sending/receiving JSON payloads (student data, confirmation status).</li>
+      </ul>
+    </section>
+
+    <!-- 12. USAGE & EXAMPLES -->
+    <section id="usage-examples" class="pop-words" data-animation="fade-in">
+      <h2 data-animation="fly-in-left">Usage &amp; Examples</h2>
+      
+      <h3 data-animation="fly-in-right">Core Functionalities</h3>
+      <ul>
+        <li data-animation="fly-in-left"><strong>Parent/Student Confirmation Pages:</strong> 
+            Contain dynamic forms to confirm or reject course requests. 
+            Data is populated based on query parameters (e.g., <code>?studentID=12345</code>).</li>
+        <li data-animation="fly-in-right"><strong>Inquiry Pages:</strong> 
+            Let parents submit phone numbers and comments when requesting changes.</li>
+      </ul>
+
+      <h3 data-animation="fly-in-left">Step-by-Step Walkthrough</h3>
+      <ol>
+        <li data-animation="fly-in-right"><strong>Student Submission:</strong> 
+            The student fills out the Microsoft Form. The Grade Approval Creation Flow triggers.</li>
+        <li data-animation="fly-in-left"><strong>Student Email:</strong> 
+            The system emails the student a link to confirm or finalize their choices.</li>
+        <li data-animation="fly-in-right"><strong>Student Confirmation:</strong> 
+            Clicking confirm triggers the Student Confirmation Flow, which updates SharePoint, 
+            generates a new PDF, and emails the parent.</li>
+        <li data-animation="fly-in-left"><strong>Parent Email &amp; Pages:</strong> 
+            The parent sees a bilingual email with a link to either confirm or inquire. 
+            That triggers a respective flow (Parent Confirmation Flow or Parent Inquiry Flow).</li>
+        <li data-animation="fly-in-right"><strong>Final Status:</strong> 
+            The system logs the final parent response in SharePoint, 
+            optionally notifying a counselor for rejections or inquiries.</li>
+      </ol>
+
+      <h3 data-animation="fly-in-left">Example Scenarios</h3>
+      <ul>
+        <li data-animation="fly-in-right"><strong>Scenario 1:</strong> 
+            10th grader picks courses, confirms them, parent also confirms, 
+            everything is logged as “Parent Confirmed.”</li>
+        <li data-animation="fly-in-left"><strong>Scenario 2:</strong> 
+            8th grader picks courses, confirms, parent requests an inquiry, 
+            counselor is notified, modifications are arranged.</li>
+        <li data-animation="fly-in-right"><strong>Scenario 3:</strong> 
+            A Spanish-speaking parent uses the translation toggle to read all instructions in Spanish 
+            and confirm or reject accordingly.</li>
+      </ul>
+    </section>
+
+    <!-- 13. TROUBLESHOOTING & FAQ -->
+    <section id="troubleshooting" class="pop-words" data-animation="fade-in">
+      <h2 data-animation="fly-in-left">Troubleshooting &amp; FAQ</h2>
+      
+      <h3 data-animation="fly-in-right">Common Issues &amp; Solutions</h3>
+      <ul>
+        <li data-animation="fly-in-left"><strong>Missing API Key for Google Translate:</strong> 
+          Ensure you’re including the <code>googleTranslateElementInit</code> function 
+          and correct script reference. Check the browser’s console for errors.</li>
+        <li data-animation="fly-in-right"><strong>Emails Not Sending:</strong> 
+          Verify the email API endpoint in your flow or the request body JSON. 
+          Test with Postman or a mock URL to confirm payload correctness.</li>
+        <li data-animation="fly-in-left"><strong>Form Data Not Appearing on Pages:</strong> 
+          Make sure the GET Request Flow is set up with correct query params 
+          and that the pages’ JavaScript references the endpoint properly.</li>
+        <li data-animation="fly-in-right"><strong>Browser Compatibility:</strong> 
+          Some older browsers might not support modern JS features (like <code>fetch</code>); 
+          use polyfills or suggest Chrome/Edge.</li>
+      </ul>
+
+      <h3 data-animation="fly-in-left">Debugging Steps</h3>
+      <ol>
+        <li data-animation="fly-in-right">Open the Developer Console (F12) to check for JavaScript errors or missing files.</li>
+        <li data-animation="fly-in-left">Verify your Power Automate or Logic App logs to see if any flows are failing silently.</li>
+        <li data-animation="fly-in-right">Confirm your SharePoint list has matching fields for the data you expect to store.</li>
+      </ol>
+
+      <h3 data-animation="fly-in-left">FAQs</h3>
+      <ul>
+        <li data-animation="fly-in-right"><strong>How do I add a new grade?</strong> 
+          Create a new HTML template for that grade, update your flows’ switch cases, 
+          and reference the correct placeholders in the email/page generation steps.</li>
+        <li data-animation="fly-in-left"><strong>Can I change the language options for Google Translate?</strong> 
+          Yes, update <code>includedLanguages: 'es,en'</code> to the desired languages in your script.</li>
+        <li data-animation="fly-in-right"><strong>How do I customize the CSS or branding?</strong> 
+          Modify the inline <code>&lt;style&gt;</code> blocks in each template, 
+          or link an external <code>.css</code> if you’re hosting them differently.</li>
+      </ul>
+    </section>
+
+    <!-- 14. VISUALS & STYLE GUIDELINES -->
+    <section id="visuals-style" class="pop-words" data-animation="fade-in">
+      <h2 data-animation="fly-in-left">Visuals &amp; Style Guidelines</h2>
+      
+      <h3 data-animation="fly-in-right">Recommended Visuals</h3>
+      <ul>
+        <li data-animation="fly-in-left"><strong>Architecture Diagram:</strong> 
+            Show how forms, Power Automate flows, SharePoint, and GitHub pages interact.</li>
+        <li data-animation="fly-in-right"><strong>Workflow Diagrams:</strong> 
+            Illustrate the path from student submission to final parent confirmation or inquiry.</li>
+        <li data-animation="fly-in-left"><strong>Screenshots:</strong> 
+            Provide examples of the interface (confirmation pages, inquiry forms, etc.).</li>
+      </ul>
+
+      <h3 data-animation="fly-in-right">Style Guidelines</h3>
+      <ul>
+        <li data-animation="fly-in-left"><strong>Tone:</strong> Accessible and professional—avoid overly technical jargon if the audience includes non-tech staff.</li>
+        <li data-animation="fly-in-right"><strong>Code Style:</strong> 
+          2-space indentation, camelCase for JS variables, kebab-case for CSS classes, 
+          consistent naming for HTML files (e.g., <code>8th_grade_parent_confirm.html</code>).</li>
+        <li data-animation="fly-in-left"><strong>Visual Consistency:</strong> 
+          Use a uniform color palette across all pages—e.g., #0d4f8b for headings, #0099ae for highlights.</li>
+        <li data-animation="fly-in-right"><strong>Accessibility:</strong> 
+          Ensure forms are labeled correctly and color contrast meets WCAG standards. 
+          Provide alt text for images.</li>
+      </ul>
+    </section>
+
+    <!-- 15. CHALLENGES & FUTURE CONSIDERATIONS -->
+    <section id="challenges" class="pop-words" data-animation="fade-in">
+      <h2 data-animation="fly-in-left">Challenges &amp; Future Considerations</h2>
+      <h3 data-animation="fly-in-right">Complex Branching &amp; Testing</h3>
+      <p data-animation="fly-in-left">
+        Managing 5 grades, new vs. existing students, bilingual content, and multiple confirmation states 
+        (student pending, student confirmed, parent pending, parent confirmed, parent rejected, etc.) 
+        required rigorous testing. Each flow had nested conditions, making debugging crucial.
+      </p>
+      <h3 data-animation="fly-in-right">Website vs. Microsoft 365</h3>
+      <p data-animation="fly-in-left">
+        A centralized custom website might have simplified the architecture but introducing 365-based 
+        flows ensured broader adoption within the school. This trade-off is important to consider 
+        for future expansions.
+      </p>
+      <h3 data-animation="fly-in-right">Scalability &amp; Maintenance</h3>
+      <p data-animation="fly-in-left">
+        Over 60 HTML templates can become cumbersome. In the future, consider modularizing repeated parts 
+        (like logos, headings, footers) or storing them externally. Also, building an admin dashboard 
+        could simplify oversight and reduce confusion among flows.
+      </p>
+      <h3 data-animation="fly-in-right">Enhanced Error Handling &amp; Analytics</h3>
+      <p data-animation="fly-in-left">
+        Future improvements include more robust error messaging and real-time analytics for 
+        how many confirmations are completed daily, potential bottlenecks, and so on.
+      </p>
+    </section>
+
+    <!-- 16. DOCUMENTATION STRATEGY & PROMPTS -->
+    <section id="doc-strategy" class="pop-words" data-animation="fade-in">
+      <h2 data-animation="fly-in-left">Documentation Strategy &amp; Suggested Prompts</h2>
+      <p data-animation="fly-in-right">
+        Creating and maintaining extensive documentation can be done iteratively. Below are prompts 
+        that help break down the writing process:
+      </p>
+      <ul>
+        <li data-animation="fly-in-left"><strong>Comprehensive Overview Prompt:</strong> 
+            For context, objectives, scope, and overall structure.</li>
+        <li data-animation="fly-in-right"><strong>Outline &amp; Structure Prompt:</strong> 
+            For building a table of contents and section headings.</li>
+        <li data-animation="fly-in-left"><strong>Detailed Section-by-Section Prompt:</strong> 
+            To flesh out each major area (installation, usage, troubleshooting, etc.).</li>
+        <li data-animation="fly-in-right"><strong>Use Case &amp; Examples Prompt:</strong> 
+            For real-world scenarios and code snippets.</li>
+        <li data-animation="fly-in-left"><strong>Troubleshooting &amp; FAQ Prompt:</strong> 
+            To foresee potential errors and solutions.</li>
+        <li data-animation="fly-in-right"><strong>Visual Aids &amp; Diagrams Prompt:</strong> 
+            Ensuring diagrams illustrate complex workflows clearly.</li>
+        <li data-animation="fly-in-left"><strong>Style &amp; Formatting Prompt:</strong> 
+            For consistent tone, voice, formatting across the documentation.</li>
+        <li data-animation="fly-in-right"><strong>Editing &amp; Improvement Prompt:</strong> 
+            For refining clarity, conciseness, correctness.</li>
+        <li data-animation="fly-in-left"><strong>Consistency Checker Prompt:</strong> 
+            To unify terminology across multiple docs or sections.</li>
+        <li data-animation="fly-in-right"><strong>Final Review &amp; Publication Prompt:</strong> 
+            Combining everything into a single polished piece (like this one!).</li>
+      </ul>
+    </section>
+
+    <!-- 17. CONCLUSION & NEXT STEPS -->
+    <section id="conclusion" class="pop-words" data-animation="fade-in">
+      <h2 data-animation="fly-in-left">Conclusion &amp; Next Steps</h2>
+      <p data-animation="fly-in-right">
+        <strong>Current State:</strong> <br><br>
+        The Choice Card Templates and flows are fully operational, allowing hundreds of students 
+        to submit course requests while parents confirm or inquire with bilingual support. 
+        All data is tracked in SharePoint for easy reference.
+      </p>
+      <p data-animation="fly-in-left">
+        <strong>In the future I plan to:</strong>
+      </p>
+      <ul>
+        <p data-animation="fly-in-right">Add an administrative dashboard to review submissions in real time.</p>
+        <p data-animation="fly-in-left">Implement advanced notifications like SMS or push alerts, so parents can just get text notifications.</p>
+        <p data-animation="fly-in-right">Add analytics for deeper insight into how quickly families respond 
+            and which electives are most popular.</p>
+        <p data-animation="fly-in-left">Expand multilingual support beyond Spanish to accommodate other languages.</p>
+        <p data-animation="fly-in-right">Overall, just create a website that is easy to use and navigate.</p>
+      </ul>
+
+      <p data-animation="fly-in-left">
+        This project demonstrates the power of combining Microsoft 365 tools with custom web tech 
+        to solve complex, real-world challenges in education. The streamlined process not only saves 
+        time but fosters transparency and trust among students, parents, and staff.
+      </p>
+      <p data-animation="fly-in-right">Thank you for reading!</p>
+    </section>
+
+    <footer>
+      &copy; 2025 HSHP Course Selection System Documentation.
+    </footer>
+  </div>
+
+  <!-- JavaScript for Scroll Animations -->
+  <script>
+    /***********************************************
+     *           SCROLL ANIMATION SCRIPT
+     ***********************************************/
+    document.addEventListener("DOMContentLoaded", () => {
+      // Options for the observer (which portions of the element are visible)
+      const options = {
+        root: null, // viewport
+        rootMargin: '0px',
+        threshold: 0.1 // trigger when 10% of the element is visible
+      };
+
+      // Callback function when intersection occurs
+      const callback = (entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Add animation classes based on data attributes
+            const target = entry.target;
+            const animation = target.getAttribute('data-animation');
+
+            if (animation === 'fly-in-left') {
+              target.classList.add('animate-fly-in-left');
+            } else if (animation === 'fly-in-right') {
+              target.classList.add('animate-fly-in-right');
+            } else if (animation === 'fade-in') {
+              target.classList.add('animate-fade-in');
+            }
+
+            // Optionally, stop observing after animation
+            observer.unobserve(target);
+          }
+        });
+      };
+
+      // Create the observer
+      const observer = new IntersectionObserver(callback, options);
+
+      // Select all elements that should be animated on scroll
+      const animateElements = document.querySelectorAll('[data-animation]');
+
+      // Start observing each element
+      animateElements.forEach(el => {
+        observer.observe(el);
+      });
+    });
+
+    /***********************************************
+     *   WORD-BY-WORD HOVER EFFECT SCRIPT
+     ***********************************************/
+    // This script wraps each word in <span class="word"> for hover effects
+    document.addEventListener("DOMContentLoaded", () => {
+      const popWordSections = document.querySelectorAll("section.pop-words");
+      popWordSections.forEach(section => {
+        wrapWordsInSection(section);
+      });
+    });
+
+    function wrapWordsInSection(section) {
+      const childNodes = Array.from(section.childNodes);
+
+      // Define tags to exclude from word wrapping (e.g., headings)
+      const excludedTags = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
+
+      childNodes.forEach(node => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          const text = node.textContent.trim();
+          if (text.length > 0) {
+            const fragment = document.createDocumentFragment();
+            const words = text.split(/\s+/);
+
+            words.forEach((word, i) => {
+              const span = document.createElement("span");
+              span.classList.add("word");
+              span.textContent = word;
+
+              fragment.appendChild(span);
+              if (i < words.length - 1) {
+                fragment.appendChild(document.createTextNode(" "));
+              }
+            });
+
+            node.replaceWith(fragment);
+          }
+        } else if (node.nodeType === Node.ELEMENT_NODE && !excludedTags.includes(node.tagName)) {
+          wrapWordsInSection(node);
+        }
+      });
+    }
+  </script>
+
+  <!-- Polyfill for Intersection Observer (for older browsers) -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserver"></script>
+</body>
+</html>
