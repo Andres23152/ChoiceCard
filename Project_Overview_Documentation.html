@@ -473,7 +473,7 @@
         <li><a href="#doc-strategy">Documentation Strategy &amp; Suggested Prompts</a></li>
         <li><a href="#conclusion">Conclusion &amp; Next Steps</a></li>
       </ol>
-<p><strong>Please note, the format of this document is a little off. For example, some words are bolded and not properly spaced. I had fun with this project though, and I wanted to push the boundaries of my skills, so it might look wacky, but I'm working on it to make it look better. Thank you!</strong></p><br>
+      <p><strong>Please note, the format of this document is a little off. For example, some words are bolded and not properly spaced. I had fun with this project though, and I wanted to push the boundaries of my skills, so it might look wacky, but I'm working on it to make it look better. Thank you!</strong></p><br>
       <p>-Andres</p>
     </nav>
 
@@ -743,9 +743,9 @@
 
     </section>
 
-    <!-- SECTION 9: PARENT INVOLVEMENT & MULTI-LANGUAGE SUPPORT -->
-    <section id="parent-involvement" class="pop-words" data-animation="fade-in">
-      <h2 data-animation="fly-in-left">Parent Involvement & Multi-Language Support</h2>
+    <!-- 9. PARENT INVOLVEMENT & MULTI-LANGUAGE SUPPORT -->
+    <section id="parent-multilang" class="pop-words" data-animation="fade-in">
+      <h2 data-animation="fly-in-left">Parent Involvement &amp; Multi-Language Support</h2>
       <p data-animation="fly-in-right">
         One of the most significant features is the involvement of parents at a crucial stage of the process. 
         Immediately after the student confirms their choices, a custom email is generated for the parent with 
@@ -756,8 +756,8 @@
       </p>
       <ul>
         <li data-animation="fly-in-right"><strong>Summary</strong> of their child’s course selections.</li>
-        <li data-animation="fly-in-left"><strong>Links to confirm or reject/inquire, along with <strong>bilingual instructions</strong>.</li>
-        <li data-animation="fly-in-right"><strong>Buttons to view a <strong>dynamically generated PDF</strong> or to read a <strong>course bulletin</strong> 
+        <li data-animation="fly-in-left"><strong>Links to confirm or reject/inquire</strong>, along with <strong>bilingual instructions</strong>.</li>
+        <li data-animation="fly-in-right"><strong>Buttons to view a <strong>dynamically generated PDF</strong></strong> or to read a <strong>course bulletin</strong> 
         (giving an overview of the classes offered).</li>
       </ul>
       <p data-animation="fly-in-left">
@@ -787,10 +787,9 @@
    
         <li data-animation="fly-in-left"><em>Choice Card Templates:</em> ~20 different HTML/CSS combos used within Power Automate 
             to generate PDFs at each step.</li>
-            <img src="https://raw.githubusercontent.com/Andres23152/ChoiceCard/refs/heads/main/Templates.png" 
+        <img src="https://raw.githubusercontent.com/Andres23152/ChoiceCard/refs/heads/main/Templates.png" 
      alt="Templates Flow Diagram" 
      class="image-showcase">
-
       </ul>
       <p data-animation="fly-in-right">
         In total, there are over 60 HTML files. Each file typically includes:
@@ -829,28 +828,28 @@
         A typical repository might look like this:
       </p>
       <pre><code data-animation="fly-in-left">
-/choice-card-templates<br>
-├─ /emails<br>
-│   ├─ 8th_Grade_Parent_Email.html<br>
-│   ├─ 9th_Grade_Parent_Email.html<br>
-│   └─ ...<br>
-├─ /pages<br>
-│   ├─ Parent_Confirmation_Pages/<br>
-│   ├─ Parent_Inquiry_Pages/<br>
-│   └─ Student_Confirmation_Pages/<br>
-├─ /templates<br>
-│   ├─ choice_cards_initial/<br>
-│   ├─ parent_confirmed_choice_cards/<br>
-│   └─ ...<br>
-├─ /css<br>
-├─ /js<br>
+/choice-card-templates
+├─ /emails
+│   ├─ 8th_Grade_Parent_Email.html
+│   ├─ 9th_Grade_Parent_Email.html
+│   └─ ...
+├─ /pages
+│   ├─ Parent_Confirmation_Pages/
+│   ├─ Parent_Inquiry_Pages/
+│   └─ Student_Confirmation_Pages/
+├─ /templates
+│   ├─ choice_cards_initial/
+│   ├─ parent_confirmed_choice_cards/
+│   └─ ...
+├─ /css
+├─ /js
 └─ index.html
       </code></pre>
 
       <h3 data-animation="fly-in-right">Setup Instructions</h3>
       <ol>
         <li data-animation="fly-in-left"><strong>Clone or Download:</strong> 
-          <code>git clone https://github.com/Andres23152/ChoiceCard.git</li>
+          <code>git clone https://github.com/Andres23152/ChoiceCard.git</code></li>
         <li data-animation="fly-in-right"><strong>(Optional) Local Server:</strong> 
           Use <code>npm install -g http-server</code> or a VS Code “Live Server” extension to test pages locally.</li>
         <li data-animation="fly-in-left"><strong>Link APIs:</strong> 
@@ -861,7 +860,7 @@
       <ul>
         <li data-animation="fly-in-left"><strong>Google Translate API:</strong> 
             For bilingual support, typically inlined via 
-            <code>&lt;script src="//translate.google.com/translate_a/element.js?cb=init" &gt;&lt;/script&gt;</code></li>
+            <code>&lt;script src="//translate.google.com/translate_a/element.js?cb=init"&gt;&lt;/script&gt;</code></li>
         <li data-animation="fly-in-right"><strong>Azure Logic Apps or Power Automate:</strong> 
             Endpoints for sending/receiving JSON payloads (student data, confirmation status).</li>
       </ul>
@@ -1122,7 +1121,9 @@
     /***********************************************
      *   WORD-BY-WORD HOVER EFFECT SCRIPT
      ***********************************************/
-    // This script wraps each word in <span class="word"> for hover effects
+    // This script wraps each word in <span class="word"> for hover effects,
+    // but excludes certain inline tags (strong, em, b, code, etc.) to avoid
+    // mangling formatting or losing spaces.
     document.addEventListener("DOMContentLoaded", () => {
       const popWordSections = document.querySelectorAll("section.pop-words");
       popWordSections.forEach(section => {
@@ -1133,10 +1134,14 @@
     function wrapWordsInSection(section) {
       const childNodes = Array.from(section.childNodes);
 
-      // Define tags to exclude from word wrapping (e.g., headings)
-      const excludedTags = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
+      // Exclude not just headings but also inline tags that you don’t want broken apart:
+      const excludedTags = [
+        'H1','H2','H3','H4','H5','H6',
+        'STRONG','EM','B','I','CODE','A'
+      ];
 
       childNodes.forEach(node => {
+        // If it's a text node, split by spaces and wrap each word in a span
         if (node.nodeType === Node.TEXT_NODE) {
           const text = node.textContent.trim();
           if (text.length > 0) {
@@ -1156,7 +1161,12 @@
 
             node.replaceWith(fragment);
           }
-        } else if (node.nodeType === Node.ELEMENT_NODE && !excludedTags.includes(node.tagName)) {
+        } 
+        // If it's an element node but NOT in the excluded list, recurse into its children
+        else if (
+          node.nodeType === Node.ELEMENT_NODE &&
+          !excludedTags.includes(node.tagName)
+        ) {
           wrapWordsInSection(node);
         }
       });
